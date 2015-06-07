@@ -1,0 +1,38 @@
+span.twitter-typeahead
+  width: 100%
+  .tt-hint
+    color: $gray-light
+
+  .tt-dropdown-menu
+    @extend .dropdown-menu
+
+  .tt-suggestion
+    > .tt-empty,
+    > a
+      // @extend .dropdown-menu > li > a
+      display: block
+      padding: 3px 20px
+      clear: both
+      font-weight: normal
+      line-height: $line-height-base
+      color: $dropdown-link-color
+      // prevent links from randomly breaking onto new lines
+      white-space: nowrap
+
+    > a
+      &:hover,
+      &:focus
+        // @extend .dropdown-menu > li > a:hover
+        text-decoration: none
+        color: $dropdown-link-hover-color
+        background-color: $dropdown-link-hover-bg
+
+    &.tt-cursor
+      // @extend .dropdown-menu > .active > a
+      &,
+      &:hover,
+      &:focus
+        color: $dropdown-link-active-color
+        text-decoration: none
+        outline: 0
+        background-color: $dropdown-link-active-bg

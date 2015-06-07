@@ -1,0 +1,146 @@
+/**
+ * $file
+ * Navigation Styling
+ */
+
+/**
+ * Navbar
+ */
+
+.nav-tabs
+  margin-bottom: 18px
+
+.nav-pills
+  margin-bottom: 9px
+  > li > a
+    padding: $padding-base-vertical $padding-base-horizontal
+    > .badge
+      margin-left: 9px
+
+.navbar
+  .btn-lg
+    padding:($padding-large-vertical - 2px) ($padding-large-horizontal - 6px)
+
+  small
+    padding: 4px 10px
+    font-size:$font-size-base
+    display:block
+
+  .btn-name
+    max-width:120px
+    height:18px
+    line-height:19px
+    overflow: hidden
+    // text-overflow: ellipsis
+    word-wrap: break-word
+
+  .btn-toolbar
+    margin:0
+
+  .btn-group
+    padding-bottom:0
+
+@media (min-width:$screen-md-min)
+  .navbar
+    .btn-name
+      max-width:320px
+
+    .btn-lg
+      padding-top:0
+      font-size:$font-size-base * 0.8
+
+.navbar-nav
+  // Keep these styles from desktop view, as we use a sidebar.
+  margin-top: 0
+  margin-bottom: 0
+  > li
+    // Keep these styles from desktop view, as we use a sidebar.
+    float: left
+    &.list-item-icon
+      > a
+        padding-left: 8px
+        padding-right: 8px
+
+      .badge
+        position: absolute
+        top: 22px
+        right: 3px
+        font-size: 9px
+        line-height: 12px
+        padding: 0px 3px
+        border-radius: 5px
+        // font-size: $fontSizeMini
+        // line-height: $lineHeightMini
+        // padding: $paddingMini
+
+      .dropdown-menu
+        &:before
+          right: 6px
+        &:after
+          right: 7px
+
+
+    > a
+      // Override default text-shadow.
+      text-shadow: none
+      margin-bottom:1px
+
+.navbar-collapse.in
+  overflow-y: visible
+
+
+#primary-nav
+  margin-right:15px
+
+
+@media (min-width: $screen-sm-min)
+  .navbar-form
+    position:relative
+    .btn
+      position:absolute
+      z-index: $zindex-popover
+
+    .form-control
+      width: 100%
+      padding-left: 36px
+      &.input-lg
+        padding-left: 44px
+
+.navbar-brand
+  img:active
+    padding-top:1px
+
+#profile-link
+  padding: 8px 15px
+  > span
+    margin-top: 6px
+
+.navbar-toggle
+  position:static
+  top: auto
+  right: auto
+  margin-top: 4px
+  float: left
+  margin-right: 20px
+  .icon-bar
+    width:14px
+
+  @media (min-width:$screen-sm-min)
+    margin-right: 0
+
+#user-menu
+  margin-right: 0
+
+
+@media (min-width:$screen-md-min)
+  #search-menu
+    width:300px
+
+  .navbar-collapse, .navbar-collapse.collapse
+    display:block
+    width: 100%
+
+
+@media (min-width:$screen-lg-min)
+  #search-menu
+    width:400px

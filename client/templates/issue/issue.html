@@ -1,0 +1,613 @@
+<template name="issue">
+  
+  {{currentBid}}
+  {{currentETC}}
+  {{currentNetBid}}
+
+  <form class="issue-form form-horizontal {{editing}}">
+
+  <header class="clearfix">
+    <h1>{{lang "title" "issue.actions.new"}}</h1>
+    <ul class="list-inline left-sm">
+      <li>
+        <button type="button" class="btn btn-default js-edit-issue {{editingActive}}{{#unless _id}} disabled{{/unless}}">
+          <span class="glyphicon glyphicon-edit"></span>
+          {{__ "common.actions.edit" }}
+        </button>
+      </li>
+      <li>
+        <button type="button" class="btn btn-default js-launch-modal" data-toggle="modal" data-target=".portfolios-modal">
+          {{! glyphicon-pie-chart }}
+          <span class="glyphicon glyphicon-briefcase"></span>
+          {{__ "issue.nouns.portfolio" }}
+        </button>
+      </li>
+      <li>
+        <button type="button" class="btn btn-default js-launch-modal" data-toggle="modal" data-target=".bids-modal">
+          <span class="glyphicon glyphicon-stats"></span>
+          {{__ "issue.nouns.bids" }}
+        </button>
+      </li>
+      <li>
+        <button type="button" class="btn btn-default js-launch-modal" data-toggle="modal" data-target=".documents-modal">
+          <span class="glyphicon glyphicon-file"></span>
+          {{__ "common.nouns.documents" }}
+        </button>
+      </li>
+      <li>
+        <button type="button" class="btn btn-default js-launch-modal" data-toggle="modal" data-target=".etc-modal">
+          <span class="glyphicon glyphicon-minus"></span>
+          {{__ "issue.nouns.etcSchedule" }}
+        </button>
+      </li>
+      {{#if hasDistributions}}
+      <li>
+        <button type="button" class="btn btn-default js-launch-modal" data-toggle="modal" data-target=".distr-modal">
+          <span class="glyphicon glyphicon-list-alt"></span>
+          {{__ "issue.nouns.distributions" }}
+        </button>
+      </li>
+      {{/if}}
+      {{#if hasCalls}}
+      <li>
+        <button type="button" class="btn btn-default js-launch-modal" data-toggle="modal" data-target=".call-modal">
+          <span class="glyphicon glyphicon-calendar"></span>
+          {{__ "issue.nouns.callSchedule" }}
+        </button>
+      </li>
+      {{/if}}
+      {{#if hasFixings}}
+      <li>
+        <button type="button" class="btn btn-default js-launch-modal" data-toggle="modal" data-target=".fixing-modal">
+          <span class="glyphicon glyphicon-calendar"></span>
+          {{__ "issue.nouns.fixings" }}
+        </button>
+      </li>
+      {{/if}}
+      <li class="show-on-edit">
+        <button type="submit" class="js-save-issue btn btn-primary">{{__ "common.actions.save" }}</button>
+      </li>
+      <li class="show-on-edit">
+        <button type="button" class="js-reset btn btn-default">{{__ "common.actions.reset" }}</button>
+      </li>
+    </ul>
+  </header>
+
+  <div id="chart"></div>
+
+  <div class="form-group">
+    <label for="issue[titleEN]" class="control-label col-sm-2">{{__ "common.fields.title" }} {{__ "common.langs.EN" }}</label>
+    <div class="col-sm-10">
+      <p class="show-on-view form-control-static">{{titleEN}}</p>
+      <span class="show-on-edit">
+        <input type="text" class="form-control" name="issue[titleEN]" value="{{titleEN}}" required="required" />
+      </span>
+    </div>
+  </div>
+    
+
+  <div class="form-group">
+    <label for="issue[titleFR]" class="control-label col-sm-2">{{__ "common.fields.title" }} {{__ "common.langs.FR" }}</label>
+    <div class="col-sm-10">
+      <p class="show-on-view form-control-static">{{titleFR}}</p>
+      <span class="show-on-edit">
+        <input type="text" class="form-control" name="issue[titleFR]" value="{{titleFR}}" required="required" />
+      </span>
+    </div>
+  </div>
+    
+    
+  <div class="form-group">
+    <label for="issue[issuanceDate]" class="control-label col-sm-2">{{__ "issue.fields.issuanceDate" }}</label>
+    <div class="col-sm-10">
+      <p class="show-on-view form-control-static">{{issuanceDate}}</p>
+      <span class="show-on-edit">
+        <input type="date" class="form-control datepicker" name="issue[issuanceDate]" maxlength="10" value="{{issuanceDateInput}}" data-date-format="{{__ "common.dates.formats.input" }}"  />
+      </span>
+    </div>
+  </div>
+    
+  <div class="form-group">
+    <label for="issue[term]" class="control-label col-sm-2">{{__ "issue.fields.term" }}</label>
+    <div class="col-sm-10">
+      <p class="show-on-view form-control-static">{{term}}</p>
+      <span class="show-on-edit">
+        <input type="number" class="form-control" name="issue[term]" min="0" max="100" value="{{term}}" />
+      </span>
+    </div>
+  </div>
+    
+  <div class="form-group">
+    <label for="issue[maturityDate]" class="control-label col-sm-2">{{__ "issue.fields.maturityDate" }}</label>
+    <div class="col-sm-10">
+      <p class="show-on-view form-control-static">{{maturityDate}}</p>
+      <span class="show-on-edit">
+        <input type="date" class="form-control datepicker maturity-date" name="issue[maturityDate]" maxlength="10" value="{{maturityDateInput}}" data-date-format="{{__ "common.dates.formats.input" }}"  />
+        <span class="help-block">
+          <button type="button" class=" btn btn-default js-update-mat-from-term">{{__ "issue.actions.updateMatFromTerm"}}</button>
+        </span>
+      </span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="issue[valuationDate]" class="control-label col-sm-2">{{__ "issue.fields.valuationDate" }}</label>
+    <div class="col-sm-10">
+      <p class="show-on-view form-control-static">{{valuationDate}}</p>
+      <span class="show-on-edit">
+        <input type="date" class="form-control datepicker valuation-date" name="issue[valuationDate]" maxlength="10" value="{{valuationDateInput}}" data-date-format="{{__ "common.dates.formats.input" }}"  />
+        <span class="help-block">
+          <button type="button" class=" btn btn-default js-update-val-from-mat">{{__ "issue.actions.updateValFromMat"}}</button>
+        </span>
+      </span>
+    </div>
+  </div>
+    
+  <div class="show-on-edit {{existed}}">
+    <button type="button" class="js-delete-issue btn btn-danger">{{__ "common.actions.delete" }}</button>
+  </div>
+  </form>
+  
+  <div class="modal fade portfolios-modal" tabindex="-1" role="dialog" aria-labelledby="portfolios-label" aria-hidden="true">
+    <form class="modal-form portfolios-form {{editing}}">
+      <div class="modal-dialog {{editingModal}}">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="{{__ "common.actions.close"}}"><span aria-hidden="true">&times;</span></button>
+            <h3 id="portfolios-label" class="modal-title">{{__ "issue.nouns.portfolio" }}
+            <button type="button" class="btn btn-default js-edit-issue {{editingActive}}{{#unless _id}} disabled{{/unless}}">
+              <span class="glyphicon glyphicon-edit"></span>
+              {{__ "common.actions.edit" }}
+            </button>
+            </h3>
+            
+          </div>
+          <div class="modal-body">
+            {{#each withIndex portfolios}}
+              {{> portfolio}}
+            {{else}}
+              <p class="portfolio">
+                {{__ "issue.empty.portfolios"}}
+                {{#if isAdmin}}
+                  <button type="button" class="btn btn-mini btn-success show-on-edit js-add-portfolio">
+                    <span class="glyphicon glyphicon-plus" title="{{__ "common.actions.add" }}"></span>
+                  </button>
+                {{/if}}
+              </p>
+            {{/each}}
+          </div>
+          <div class="modal-footer show-on-edit">
+            <button type="submit" class="js-save-issue btn btn-primary">{{__ "common.actions.save" }}</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal fade bids-modal" tabindex="-1" role="dialog" aria-labelledby="bids-label" aria-hidden="true">
+    <form class="modal-form bids-form {{editing}}">
+      <div class="modal-dialog {{editingModal}}">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="{{__ "common.actions.close"}}"><span aria-hidden="true">&times;</span></button>
+            <h3 id="bids-label" class="modal-title">{{__ "issue.nouns.bids" }}
+            <button type="button" class="btn btn-default js-edit-issue {{editingActive}}{{#unless _id}} disabled{{/unless}}">
+              <span class="glyphicon glyphicon-edit"></span>
+              {{__ "common.actions.edit" }}
+            </button>
+            </h3>
+            
+          </div>
+          <div class="modal-body">
+            <div class="table-responsive">
+            <table class="table table-condensed bids form-inline">
+              <thead>
+                <tr>
+                  <th>{{__ "common.nouns.date"}}</th>
+                  <th>{{__ "common.nouns.amount"}}</th>
+                  <th>{{! operations }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each bids}}
+                  {{> bid}}
+                {{else}}
+                  <tr>
+                    <td colspan="100%">
+                      {{__ "issue.empty.bids"}}
+                      {{#if isAdmin}}
+                        <button type="button" class="btn btn-mini btn-success show-on-edit js-add-bid">
+                          <span class="glyphicon glyphicon-plus" title="{{__ "common.actions.add" }}"></span>
+                        </button>
+                      {{/if}}
+                    </td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+            </div>
+          </div>
+          <div class="modal-footer show-on-edit">
+            <button type="submit" class="js-save-issue btn btn-primary">{{__ "common.actions.save" }}</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  <div class="modal fade documents-modal" tabindex="-1" role="dialog" aria-labelledby="documents-label" aria-hidden="true">  
+    <form class="modal-form documents-form {{editing}}">
+      <div class="modal-dialog {{editingModal}}">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="{{__ "common.actions.close"}}"><span aria-hidden="true">&times;</span></button>
+            <h3 id="documents-label" class="modal-title">{{__ "common.nouns.documents" }}
+            <button type="button" class="btn btn-default js-edit-issue {{editingActive}}{{#unless _id}} disabled{{/unless}}">
+              <span class="glyphicon glyphicon-edit"></span>
+              {{__ "common.actions.edit" }}
+            </button>
+            </h3>
+            
+          </div>
+          <div class="modal-body">
+            <div class="show-on-view">
+              <ul>
+              {{#each privateFiles}}
+                <li><a href="{{this.url download=true}}">{{i18nFile this.doc}}</a></li>
+              {{/each}}
+              {{#each publicFiles}}
+                <li><a href="{{this.url download=true}}">{{i18nFile this.doc}}</a></li>
+              {{/each}}
+              </ul>
+            </div>
+            <div class="show-on-edit">
+              <div class="form-group">
+                 <!-- blueimp HTML -->
+                 <!-- <span class="btn btn-success fileinput-button">
+                      <i class="glyphicon glyphicon-plus"></i>
+                      <span>Add files...</span>
+                      <input type="file" name="files">
+                  </span> -->
+                <label for="issue[greensheetEN]">{{__ "issue.docs.greensheet"}} {{__ "common.langs.EN"}}</label>
+                <input type="file" name="issue[greensheetEN]" class="file-input">
+                {{#with greensheetEN}}
+                  {{#unless this.isUploaded}}
+                    {{> FS.UploadProgressBar bootstrap=true}}
+                  {{else}}
+                    <strong>{{this.name}}</strong> <a href="{{this.url download=true}}" class="btn btn-link">{{__ "common.actions.download" }}</a>
+                    {{#FS.DeleteButton class="btn btn-link"}}{{__ "common.actions.remove"}}{{/FS.DeleteButton}}
+                  {{/unless}}
+                {{/with}}
+              </div>
+              <label for="issue[greensheetFR]">{{__ "issue.docs.greensheet"}} {{__ "common.langs.FR"}}</label>
+              <input type="file" name="issue[greensheetFR]" class="file-input">
+              <div class="form-group">
+                {{#with greensheetFR}}
+                  {{#unless this.isUploaded}}
+                    {{> FS.UploadProgressBar bootstrap=true}}
+                  {{else}}
+                    <strong>{{this.name}}</strong> <a href="{{this.url download=true}}" class="btn btn-link">{{__ "common.actions.download" }}</a>
+                    {{#FS.DeleteButton class="btn btn-link"}}{{__ "common.actions.remove"}}{{/FS.DeleteButton}}
+                  {{/unless}}
+                {{/with}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  <div class="modal fade etc-modal" tabindex="-1" role="dialog" aria-labelledby="etc-label" aria-hidden="true">  
+    <form class="modal-form etc-form {{editing}}">
+      <div class="modal-dialog {{editingModal}}">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="{{__ "common.actions.close"}}"><span aria-hidden="true">&times;</span></button>
+            <h3 id="etc-label" class="modal-title">{{__ "issue.nouns.etcSchedule" }}
+            <button type="button" class="btn btn-default js-edit-issue {{editingActive}}{{#unless _id}} disabled{{/unless}}">
+              <span class="glyphicon glyphicon-edit"></span>
+              {{__ "common.actions.edit" }}
+            </button>
+            </h3>
+            
+          </div>
+          <div class="modal-body">
+            {{#if isAdmin}}
+            <div class="well show-on-edit">
+              <div class="clearfix">
+                <div class="pull-left">
+                  <div class="form-group inline-block etc-total-period-group">
+                    <label>{{__ "issue.etc.totalPeriod" }}</label>
+                    <input type="number" class="form-control js-session etc-total-period" name="issue[etc][totalPeriod]" min="0" />
+                  </div>
+                  <div class="form-group inline-block etc-steps-group">
+                    <label>{{__ "issue.etc.steps" }}</label>
+                    <input type="number" class="form-control js-session etc-steps" name="issue[etc][steps]" min="0" />
+                  </div>
+
+                  <div class="form-group inline-block etc-max-amount-group">
+                    <label>{{__ "issue.etc.maxAmount" }}</label>
+                    <div class="input-group">
+                      <span class="input-group-addon">$</span>
+                      <input type="number" class="form-control js-session etc-max-amount" name="issue[etc][maxAmount]" min="0" step="0.01" />
+                    </div>
+                  </div>
+                </div>
+                <div class="pull-right">
+                  <div class="form-group inline-block">
+                    <button type="button" class="btn btn-primary js-create-etcs">{{__ "issue.actions.createETCs"}}</button>
+                    <button type="button" class="btn btn-default js-reset-etcs">{{__ "issue.actions.resetETCs"}}</button>
+                    <button type="button" class="btn btn-default js-set-last-etc-to-mat-date">{{__ "issue.actions.setLastETCtoMat" }}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{/if}}
+            <div class="table-responsive">
+            <table class="table table-condensed etcs form-inline">
+              <thead>
+                <tr>
+                  <th>{{__ "common.prepositions.from" }} {{__ "common.nouns.date" }}</th>
+                  <th>{{__ "common.prepositions.to" }} {{__ "common.nouns.date" }}</th>
+                  <th>{{__ "common.nouns.amount"}}</th>
+                  <th>{{! operations }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each ETCs}}
+                  {{> ETC}}
+                {{else}}
+                  <tr>
+                    <td colspan="100%">
+                      {{__ "issue.empty.ETCs"}}
+                      {{#if isAdmin}}
+                        <button type="button" class="btn btn-mini btn-success show-on-edit js-add-etc">
+                          <span class="glyphicon glyphicon-plus" title="{{__ "common.actions.add" }}"></span>
+                        </button>
+                      {{/if}}
+                    </td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+            </div>
+          </div>
+          <div class="modal-footer show-on-edit">
+            <button type="submit" class="btn btn-primary js-save-issue ">{{__ "common.actions.save" }}</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  {{#if hasDistributions}}
+  <div class="modal fade distr-modal" tabindex="-1" role="dialog" aria-labelledby="distr-label" aria-hidden="true">  
+    <form class="modal-form distr-form {{editing}}">
+      <div class="modal-dialog {{editingModal}}">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="{{__ "common.actions.close"}}"><span aria-hidden="true">&times;</span></button>
+            <h3 id="distr-label" class="modal-title">{{__ "issue.nouns.distributions" }}
+            <button type="button" class="btn btn-default js-edit-issue {{editingActive}}{{#unless _id}} disabled{{/unless}}">
+              <span class="glyphicon glyphicon-edit"></span>
+              {{__ "common.actions.edit" }}
+            </button>
+            </h3>
+            
+          </div>
+          <div class="modal-body">
+            {{#if isAdmin}}
+            <div class="well show-on-edit">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" class="js-autosave" name="issue[hasDistrValDate]" checked="{{hasDistrValDate}}"> {{__ "issue.properties.hasDistrValDate"}}
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" class="js-autosave" name="issue[hasDistrThreshold]" checked="{{hasDistrThreshold}}"> {{__ "issue.properties.hasDistrThreshold"}}
+                </label>
+              </div>
+            </div>
+            {{/if}}
+            <div class="table-responsive">
+            <table class="table distributions form-inline">
+              <thead>
+                <tr>
+                  {{#if hasDistrValDate}}
+                    <th>{{__ "issue.nouns.valuationDate"}}</th>
+                  {{/if}}
+                  <th>{{__ "issue.nouns.paymentDate"}}</th>
+                  {{#if hasDistrThreshold}}
+                    <th>{{__ "issue.nouns.threshold"}}</th>
+                  {{/if}}
+                  <th>{{__ "common.nouns.amount"}}</th>
+                  <th>{{! operations }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each distributions}}
+                  {{> distribution}}
+                {{else}}
+                  <tr>
+                    <td colspan="100%">
+                      {{__ "issue.empty.distributions"}}
+                      {{#if isAdmin}}
+                        <button type="button" class="btn btn-mini btn-success show-on-edit js-add-distr">
+                          <span class="glyphicon glyphicon-plus" title="{{__ "common.actions.add" }}"></span>
+                        </button>
+                      {{/if}}
+                    </td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+            </div>
+          </div>
+          <div class="modal-footer show-on-edit">
+            <button type="submit" class="js-save-issue btn btn-primary">{{__ "common.actions.save" }}</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  {{/if}}
+  
+  {{#if hasCalls}}
+  <div class="modal fade call-modal" tabindex="-1" role="dialog" aria-labelledby="call-label" aria-hidden="true">  
+    <form class="modal-form call-form {{editing}}">
+      <div class="modal-dialog {{editingModal}}">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="{{__ "common.actions.close"}}"><span aria-hidden="true">&times;</span></button>
+            <h3 id="call-label" class="modal-title">{{__ "issue.nouns.callSchedule" }}
+            <button type="button" class="btn btn-default js-edit-issue {{editingActive}}{{#unless _id}} disabled{{/unless}}">
+              <span class="glyphicon glyphicon-edit"></span>
+              {{__ "common.actions.edit" }}
+            </button>
+            </h3>
+            
+          </div>
+          <div class="modal-body">
+            {{#if isAdmin}}
+            <div class="well show-on-edit">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" class="js-autosave" name="issue[hasCallValDate]" checked="{{hasCallValDate}}"> {{__ "issue.properties.hasCallValDate"}}
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" class="js-autosave" name="issue[hasCallThreshold]" checked="{{hasCallThreshold}}"> {{__ "issue.properties.hasCallThreshold"}}
+                </label>
+              </div>
+            </div>
+            {{/if}}
+            <div class="table-responsive">
+            <table class="table calls form-inline">
+              <thead>
+                <tr>
+                  {{#if hasCallValDate}}
+                    <th>{{__ "issue.nouns.valuationDate"}}</th>
+                  {{/if}}
+                  <th>{{__ "issue.nouns.paymentDate"}}</th>
+                  {{#if hasCallThreshold}}
+                    <th>{{__ "issue.nouns.threshold"}}</th>
+                  {{/if}}
+                  <th>{{__ "common.nouns.amount"}}</th>
+                  <th>{{! operations }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each calls}}
+                  {{> callDate}}
+                {{else}}
+                  <tr>
+                    <td colspan="100%">
+                      {{__ "issue.empty.calls"}}
+                      {{#if isAdmin}}
+                        <button type="button" class="btn btn-mini btn-success show-on-edit js-add-call">
+                          <span class="glyphicon glyphicon-plus" title="{{__ "common.actions.add" }}"></span>
+                        </button>
+                      {{/if}}
+                    </td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+            </div>
+          </div>
+          <div class="modal-footer show-on-edit">
+            <button type="submit" class="js-save-issue btn btn-primary">{{__ "common.actions.save" }}</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  {{/if}}
+  
+  {{#if hasFixings}}
+  <div class="modal fade fixing-modal" tabindex="-1" role="dialog" aria-labelledby="fixing-label" aria-hidden="true">  
+    <form class="modal-form fixing-form {{editing}}">
+      <div class="modal-dialog {{editingModal}}">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="{{__ "common.actions.close"}}"><span aria-hidden="true">&times;</span></button>
+            <h3 id="fixing-label" class="modal-title">{{__ "issue.nouns.fixings" }}
+            <button type="button" class="btn btn-default js-edit-issue {{editingActive}}{{#unless _id}} disabled{{/unless}}">
+              <span class="glyphicon glyphicon-edit"></span>
+              {{__ "common.actions.edit" }}
+            </button>
+            </h3>
+            
+          </div>
+          <div class="modal-body">
+            {{#if isAdmin}}
+            <div class="well show-on-edit">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" class="js-autosave" name="issue[hasFixingTicker]" checked="{{hasFixingTicker}}"> {{__ "issue.properties.hasFixingTicker"}}
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" class="js-autosave" name="issue[hasFixingAmount]" checked="{{hasFixingAmount}}"> {{__ "issue.properties.hasFixingAmount"}}
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" class="js-autosave" name="issue[hasFixingAdjustedAmount]" checked="{{hasFixingAdjustedAmount}}"> {{__ "issue.properties.hasFixingAdjustedAmount"}}
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" class="js-autosave" name="issue[hasFixingsInPercent]" checked="{{hasFixingsInPercent}}"> {{__ "issue.properties.hasFixingsInPercent"}}
+                </label>
+              </div>
+            </div>
+            {{/if}}
+            <div class="table-responsive">
+            <table class="table fixings form-inline">
+              <thead>
+                <tr>
+                  <th>{{__ "common.nouns.date"}}</th>
+                  {{#if hasFixingTicker}}
+                    <th>{{__ "issue.nouns.ticker"}}</th>
+                  {{/if}}
+                  {{#if hasFixingAmount}}
+                    <th>{{__ "common.nouns.amount"}}</th>
+                  {{/if}}
+                  {{#if hasFixingAdjustedAmount}}
+                    <th>{{__ "issue.nouns.adjustedAmount"}}</th>
+                  {{/if}}
+                  <th>{{! operations }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each fixings}}
+                  {{> fixing}}
+                {{else}}
+                  <tr>
+                    <td colspan="100%">
+                      {{__ "issue.empty.fixings"}}
+                      {{#if isAdmin}}
+                        <button type="button" class="btn btn-mini btn-success show-on-edit js-add-fixing">
+                          <span class="glyphicon glyphicon-plus" title="{{__ "common.actions.add" }}"></span>
+                        </button>
+                      {{/if}}
+                    </td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+            </div>
+          </div>
+          <div class="modal-footer show-on-edit">
+            <button type="submit" class="js-save-issue btn btn-primary">{{__ "common.actions.save" }}</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  {{/if}}
+</template>

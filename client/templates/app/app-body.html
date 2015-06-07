@@ -1,0 +1,53 @@
+<template name="appBody">
+  
+  <div id="page" class="{{menuOpen}} {{overlayOpen}}">
+
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header pull-left">
+          <a class="navbar-brand" href="/">GitHub Browser</a>
+        </div>
+        <ul id="primary-nav" class="nav navbar-nav navbar-left">
+          <li><a href="{{pathFor 'home'}}" class="{{activePage 'home'}}">{{__ "common.nouns.home"}}</a></li>
+          <li><a href="{{pathFor 'issues'}}" class="{{activePage 'issues'}}">{{__ "common.classes.issues"}}</a></li>
+          <li><a href="{{pathFor 'structures'}}" class="{{activePage 'structures'}}">{{__ "common.classes.structures"}}</a></li>
+          {{#if isAdmin}}
+          <li class="highlight"><a href="{{pathFor 'admin'}}" class="{{activePage 'admin'}}">{{__ "common.nouns.admin"}}</a></li>
+          {{/if}}
+        </ul>
+        <ul id="secondary-nav" class="nav navbar-nav navbar-right">
+          {{> loginButtons}}
+          {{! Do not translate (native language) }}
+          {{#unless isEnglish}}<li><a href="#" id="js-switch-english">English</a></li>{{/unless}}
+          {{#unless isFrench}}<li><a href="#" id="js-switch-french">Français</a></li>{{/unless}}
+        </ul>
+      </div>
+    </nav>
+
+    {{> overlay}}
+
+    <div class="content-overlay"></div>
+
+    <div class="container">
+      <div id="content">
+        {{> yield}}
+      </div>
+
+      <div class="notifications">
+        {{#unless connected}}
+          <div class="notification alert alert-info">
+            <span class="icon-sync"></span>
+            <div class="title-notification">Trying to connect</div>
+          </div>
+        {{/unless}}
+        {{#each notifications}}
+          <div class="notification alert alert-{{type}}">
+            <a class="btn-primary js-notification-action">{{action}}</a>
+            <div class="title-notification">{{title}}</div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+    
+  </div>
+</template>

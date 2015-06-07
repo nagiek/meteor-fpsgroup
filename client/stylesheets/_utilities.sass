@@ -1,0 +1,215 @@
+.pull-right
+  &.btn-group
+    float:right
+
+.photo-shift
+  margin-left: 5px
+
+.help-general
+  color: $gray-light
+  font-size: $font-size-base
+  line-height: $line-height-large
+
+.position-relative
+  position:relative
+
+.position-absolute
+  position:absolute
+
+.position-bottom
+  position:absolute
+  bottom: 0
+  left: 0
+  right: 0
+
+
+// LISTS
+// -----
+
+a > .badge
+  margin-left:4px /* LTR */
+
+
+/**
+ * Lists
+ */
+ul.list-inline, ol.list-inline
+  margin-bottom: 9px
+  // li + li
+  //   margin-left:10px
+  //
+  &.inline-condensed
+    li + li
+      padding-left: 1px
+      padding-right: 1px
+
+@media (min-width: $screen-sm-min)
+  ul.list-inline, ol.list-inline
+    margin-bottom: 0
+
+.half-in
+  @include opacity(0.5)
+
+.no-bullet
+  list-style: none
+
+.two-column,
+.three-column
+  -moz-column-count: 1
+  -moz-column-gap: 0
+  -webkit-column-count: 1
+  -webkit-column-gap: 0
+  column-count: 1
+  column-gap: 0
+
+@media (min-width: $screen-sm-min)
+  .two-column,
+  .three-column
+    -moz-column-gap: 10px
+    -webkit-column-gap: 10px
+    column-gap: 10px
+
+  .three-column
+    -moz-column-count: 2
+    -webkit-column-count: 2
+    column-count: 2
+
+@media (min-width: $screen-md-min)
+  .two-column,
+  .three-column
+    // Move margin of list-items to the list-items themselves.
+    margin-left: 0
+    > li
+      margin-left: 25px
+
+  .three-column
+    -moz-column-count: 3
+    -webkit-column-count: 3
+    column-count: 3
+
+  .two-column
+    -moz-column-count: 2
+    -webkit-column-count: 2
+    column-count: 2
+
+.display-block
+  display:block
+.display-inline
+  display:inline
+.inline-block
+  display:inline-block
+
+.center-tabs
+  margin:0 auto
+  > li
+    float: none
+    display: inline-block
+
+.align-top
+  vertical-align: top !important
+.align-middle
+  vertical-align: middle !important
+.align-bottom
+  vertical-align: bottom !important
+
+@media (min-width: $screen-lg-min)
+  .pull-right
+    &[class*="col-offset-"]
+      margin-left: percentage((1 / $grid-columns))
+
+    &.col-offset-1
+      margin-right: percentage((1 / $grid-columns))
+    &.col-offset-2
+      margin-right: percentage((2 / $grid-columns))
+    &.col-offset-3
+      margin-right: percentage((3 / $grid-columns))
+    &.col-offset-4
+      margin-right: percentage((4 / $grid-columns))
+    &.col-offset-5
+      margin-right: percentage((5 / $grid-columns))
+    &.col-offset-6
+      margin-right: percentage((6 / $grid-columns))
+    &.col-offset-7
+      margin-right: percentage((7 / $grid-columns))
+    &.col-offset-8
+      margin-right: percentage((8 / $grid-columns))
+    &.col-offset-9
+      margin-right: percentage((9 / $grid-columns))
+    &.col-offset-10
+     margin-right: percentage((10/ $grid-columns))
+    &.col-offset-11
+      margin-right: percentage((11/ $grid-columns))
+
+
+
+@media (max-width: $screen-sm-max)
+  .pull-left,
+  .pull-right
+    float: none
+    &[class*="span"]
+      float:none
+
+    &[class*="offset"]
+      margin-right:0
+
+
+
+
+@media (max-width: $screen-xs-max)
+  .clearfix-xs
+    @extend .clearfix
+
+
+
+
+@media (min-width:$screen-sm-min)
+  .left-sm
+    float:left
+  .right-sm
+    float:right
+  .left-shift-sm
+    margin-left: 10px
+  .right-shift-sm
+    margin-left: 10px
+
+
+@media (min-width:$screen-md-min)
+  .left-md
+    float:left
+  .right-md
+    float:right
+  .left-shift-md
+    margin-left: 10px
+  .right-shift-md
+    margin-left: 10px
+
+
+@media (min-width:$screen-lg-min)
+  .left-lg
+    float:left
+  .right-lg
+    float:right
+  .left-shift-lg
+    margin-left: 10px
+  .right-shift-lg
+    margin-left: 10px
+
+
+.left-xs-sm-only
+  float:left
+.right-xs-sm-only
+  float:right
+.left-shift-xs-sm-only
+  margin-left: 10px
+.right-shift-xs-sm-only
+  margin-left: 10px
+
+@media (min-width:$screen-md-min)
+  .left-xs-sm-only
+    float:none
+  .right-xs-sm-only
+    float:none
+  .left-shift-xs-sm-only
+    margin-left: 0
+  .right-shift-xs-sm-only
+    margin-left: 0

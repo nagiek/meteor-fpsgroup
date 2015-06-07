@@ -1,0 +1,28 @@
+<template name="bid">
+  <tr class="bid">
+    <td>
+      <div class="show-on-view">{{displayDate}}</div>
+      <div class="form-group show-on-edit">
+        <label class="sr-only">{{__ "common.nouns.date" }}</label>
+        <input type="date" name="issue[bids][][date]" class="form-control datepicker" maxlength="10" data-date-format="{{__ "common.dates.formats.input" }}" value="{{dateInput}}" data-date="{{dateInput}}" />
+      </div>
+    </td>
+    <td>
+      <div class="show-on-view">{{ displayAmount }}</div>
+      <div class="form-group show-on-edit">
+        <label class="sr-only">{{__ "common.nouns.amount" }}</label>
+        <input type="number" name="issue[bids][][amount]" class="form-control amount" step=".01" min="0" placeholder="100.00" maxlength="6"  value="{{ amount }}">
+      </div>
+    </td>
+    <td>
+      <div class="show-on-edit">
+      <button type="button" class="btn btn-xs btn-success js-add-bid">
+        <span class="glyphicon glyphicon-plus" title="{{__ "common.actions.add" }}"></span>
+      </button>
+      <button type="button" class="btn btn-xs btn-danger js-remove-bid">
+        <span class="glyphicon glyphicon-minus" title="{{__ "common.actions.remove" }}"></span>
+      </button>
+      </div>
+    </td>
+  </tr>
+</template>

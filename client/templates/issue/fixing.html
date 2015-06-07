@@ -1,0 +1,48 @@
+<template name="fixing">
+  <tr>
+    <td>
+      <div class="show-on-view">{{date}}</div>
+      <div class="form-group show-on-edit">
+        <label class="sr-only">{{__ "common.nouns.date" }}</label>
+        <input type="date" name="issue[fixings][][date]" class="form-control datepicker date-input" maxlength="10" data-date-format="{{__ "common.dates.formats.input" }}" value="{{dateInput}}" />
+      </div>
+    </td>
+    {{#if ../hasFixingTicker}}
+    <td>
+      <div class="show-on-view">{{displayTicker}}</div>
+      <div class="form-group show-on-edit">
+        <label class="sr-only">{{__ "issue.nouns.ticker" }}</label>
+        <input type="text" name="issue[fixings][][ticker]" class="form-control" value="{{ticker}}" />
+      </div>
+    </td>
+    {{/if}}
+    {{#if ../hasFixingAmount}}
+    <td>
+      <div class="show-on-view">{{displayAmount}}</div>
+      <div class="form-group show-on-edit">
+        <label class="sr-only">{{__ "common.nouns.amount" }}</label>
+        <input type="number" name="issue[fixings][][amount]" class="form-control amount-input" value="{{amount}}">
+      </div>
+    </td>
+    {{/if}}
+    {{#if ../hasFixingAdjustedAmount}}
+      <td>
+        <div class="show-on-view">{{displayAdjustedAmount}}</div>
+        <div class="form-group show-on-edit">
+          <label class="sr-only">{{__ "issue.nouns.adjustedAmount" }}</label>
+          <input type="number" name="issue[fixings][][adjustedAmount]" class="form-control adjusted-amount-input" value="{{adjustedAmount}}" />
+        </div>
+      </td>
+    {{/if}}
+    <td>
+      <div class="show-on-edit">
+      <button type="button" class="btn btn-xs btn-success js-add-fixing">
+        <span class="glyphicon glyphicon-plus" title="{{__ "common.actions.add" }}"></span>
+      </button>
+      <button type="button" class="btn btn-xs btn-danger js-remove-fixing">
+        <span class="glyphicon glyphicon-minus" title="{{__ "common.actions.remove" }}"></span>
+      </button>
+      </div>
+    </td>
+  </tr>
+</template>

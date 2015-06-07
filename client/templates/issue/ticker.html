@@ -1,0 +1,76 @@
+<template name="ticker">
+  <tr>
+    <td>
+      <p class="show-on-view form-control-static">{{displayBloomberg}}</p>
+      <div class="form-group show-on-edit">
+        <label class="sr-only">{{__ "issue.nouns.bloomberg" }}</label>
+        <input type="text" name="issue[portfolios][{{../index}}][tickers][{{index}}][bloomberg]" class="form-control bloomberg-input" value="{{bloomberg}}" autocomplete="off" spellcheck="off" />
+      </div>
+    </td>
+    {{#if parentShowsTickerWeight}}
+    <td>
+      <p class="show-on-view form-control-static">{{displayWeight}}</p>
+      <div class="form-group show-on-edit">
+        <label class="sr-only">{{__ "common.nouns.weight" }}</label>
+        <input type="number" name="issue[portfolios][{{../index}}][tickers][{{index}}][weight]" class="form-control weight-input" value="{{weight}}" min="0" step="0.01" />
+      </div>
+    </td>
+    {{/if}}
+    <td>
+      <p class="show-on-view form-control-static">{{displayInitialPrice}}</p>
+      <div class="form-group show-on-edit">
+        <label class="sr-only">{{__ "issue.nouns.initialPrice" }}</label>
+        <input type="number" name="issue[portfolios][{{../index}}][tickers][{{index}}][initialPrice]" class="form-control initial-price-input" value="{{initialPrice}}" min="0" step="0.01" >
+      </div>
+    </td>
+    {{#if parentHasFXExposure}}
+    <td>
+      <p class="show-on-view form-control-static">{{displayInitialFX}}</p>
+      <div class="form-group show-on-edit">
+        <label class="sr-only">{{__ "issue.nouns.initialFX" }}</label>
+        <input type="number" name="issue[portfolios][{{../index}}][tickers][{{index}}][initialFX]" class="form-control initial-fx-input" value="{{initialFX}}" min="0" step="0.0001" />
+      </div>
+    </td>
+    {{/if}}
+    <td>
+      <p class="form-control-static">{{displayCurrentPrice}}</p>
+    </td>
+    {{#if parentHasFXExposure}}
+    <td>
+      <p class="form-control-static">{{displayCurrentFX}}</p>
+    </td>
+    {{/if}}
+    <td>
+      <p class="form-control-static">{{displayReturn}}</p>
+    </td>
+    {{#if parentHasLocalReturnModifier}}
+    <td>
+      <p class="form-control-static">{{displayModifiedReturn}}</p>
+    </td>
+    {{/if}}
+    {{#if parentShowsTickerRanking}}
+    <td>
+      <p class="form-control-static">{{ranking}}</p>
+    </td>
+    {{/if}}
+    {{#if isAdmin}}
+    <td class="show-on-edit">
+      <div class="checkbox form-control-static">
+        <label>
+          <input type="checkbox" name="issue[portfolios][{{../index}}][tickers][{{index}}][hasFXExposure]" class="js-toggle-ticker-fx-exposure" checked="{{hasFXExposure}}">
+        </label>
+      </div>
+    </td>
+    <td class="show-on-edit">
+      <p class="form-control-static">
+        <button type="button" class="btn btn-xs btn-success js-add-ticker">
+          <span class="glyphicon glyphicon-plus" title="{{__ "common.actions.add" }}"></span>
+        </button>
+        <button type="button" class="btn btn-xs btn-danger js-remove-ticker">
+          <span class="glyphicon glyphicon-minus" title="{{__ "common.actions.remove" }}"></span>
+        </button>
+      </p>
+    </td>
+    {{/if}}
+  </tr>
+</template>

@@ -1,0 +1,38 @@
+<template name="ETC">
+  <tr class="{{highlight}}">
+    <td class="date">
+      <p class="form-control-static inline-block">{{fromDate}}</p>
+      <div class="form-group show-on-edit">
+        <label class="sr-only">{{__ "common.prepositions.from" }} {{__ "common.nouns.number" }}</label>
+        <input type="number" name="issue[etcSchedule][][fromNum]" class="form-control etc-from-num-input" step="1" min="0" value="{{fromNum}}" />
+      </div>
+    </td>
+    <td class="date">
+      <p class="form-control-static inline-block">{{toDate}}</p>
+      <div class="form-group show-on-edit">
+        <label class="sr-only">{{__ "common.prepositions.to" }} {{__ "common.nouns.number" }}</label>
+        <input type="number" name="issue[etcSchedule][][toNum]" class="form-control etc-to-num-input" step="1" min="0" value="{{toNum}}" />
+      </div>
+    </td>
+    <td class="amount">
+      <p class="form-control-static show-on-view">{{displayAmount}}</p>
+      <div class="form-group show-on-edit">
+        <label class="sr-only">{{__ "common.nouns.amount" }}</label>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input type="number" name="issue[etcSchedule][][amount]" class="form-control amount-input" min="0" max="1000" step="0.01" value="{{amount}}">
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="show-on-edit">
+      <button type="button" class="btn btn-xs btn-success js-add-etc">
+        <span class="glyphicon glyphicon-plus" title="{{__ "common.actions.add" }}"></span>
+      </button>
+      <button type="button" class="btn btn-xs btn-danger js-remove-etc">
+        <span class="glyphicon glyphicon-minus" title="{{__ "common.actions.remove" }}"></span>
+      </button>
+      </div>
+    </td>
+  </tr>
+</template>

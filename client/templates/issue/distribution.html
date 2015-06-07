@@ -1,0 +1,52 @@
+<template name="distribution">
+  <tr>
+    {{#if ../hasDistrValDate}}
+    <td>
+      <div class="show-on-view">{{valuationDate}}</div>
+      <div class="form-group show-on-edit">
+        <label class="sr-only">{{__ "issue.nouns.valuationDate" }}</label>
+        <input type="date" name="issue[distributions][][valuationDate]" class="form-control datepicker val-date-input" maxlength="10" data-date-format="{{__ "common.dates.formats.input" }}" value="{{valuationDateInput}}" />
+      </div>
+    </td>
+    {{/if}}
+    <td>
+      <div class="show-on-view">{{paymentDate}}</div>
+      <div class="form-group show-on-edit">
+        <label class="sr-only">{{__ "issue.nouns.paymentDate" }}</label>
+        <input type="date" name="issue[distributions][][paymentDate]" class="form-control datepicker pay-date-input" maxlength="10" data-date-format="{{__ "common.dates.formats.input" }}" value="{{paymentDateInput}}" />
+      </div>
+    </td>
+    {{#if ../hasDistrThreshold}}
+      <td>
+        <div class="show-on-view">{{displayThreshold}}</div>
+        <div class="form-group show-on-edit">
+          <label class="sr-only">{{__ "issue.nouns.threshold" }}</label>
+          <div class="input-group">
+            <input type="number" name="issue[distributions][][threshold]" class="form-control" step="1" min="-100" max="100" placeholder="-20" value="{{threshold}}" />
+            <span class="input-group-addon">%</span>
+          </div>
+        </div>
+      </td>
+    {{/if}}
+    <td>
+      <div class="show-on-view">{{ displayAmount }}</div>
+      <div class="form-group show-on-edit">
+        <label class="sr-only">{{__ "common.nouns.amount" }}</label>
+        <div class="input-group">
+          <input type="number" name="issue[distributions][][amount]" class="form-control price-input" step="0.001" min="0" max="1000" placeholder="2"  value="{{ amount }}">
+          <span class="input-group-addon">%</span>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="show-on-edit">
+      <button type="button" class="btn btn-xs btn-success js-add-distr">
+        <span class="glyphicon glyphicon-plus" title="{{__ "common.actions.add" }}"></span>
+      </button>
+      <button type="button" class="btn btn-xs btn-danger js-remove-distr">
+        <span class="glyphicon glyphicon-minus" title="{{__ "common.actions.remove" }}"></span>
+      </button>
+      </div>
+    </td>
+  </tr>
+</template>

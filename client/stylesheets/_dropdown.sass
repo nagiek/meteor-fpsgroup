@@ -1,0 +1,61 @@
+// DROPDOWN MENUS
+// --------------
+
+.dropdown-toggle
+  cursor: pointer
+
+.dropdown-menu > li > a p
+  white-space: normal
+
+.dropdown-top
+  text-align: right
+  display: block
+  padding:5px 15px
+  position:relative
+  top:-5px
+  background-color: $gray-lighter
+  a
+    color:$gray-light
+    &:hover
+      color:$gray
+      text-decoration: none
+
+.dropdown-bottom
+  text-align: center
+  display: block
+  margin-top:5px
+  padding:5px 0
+  position:relative
+  top:6px
+  background-color: $gray-lighter
+  color:$gray-light
+  @include border-bottom-radius($border-radius-base)
+  &:hover
+    color:$gray
+    text-decoration: none
+
+// The dropdown menu (ul)
+// ----------------------
+.dropdown-menu
+
+  li
+    &.empty
+      padding: 8px 8px 4px
+      text-align:center
+
+
+  // Apply to lists within the dropdown.
+  ul
+    list-style: none
+
+  form
+    padding: 0 6px
+    margin-bottom:0
+
+
+  // Allow dropdown menu style to be applied to form/div tags as well
+  > li
+    > div,
+    > form
+      padding: 3px 20px
+      clear: both

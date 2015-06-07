@@ -1,0 +1,40 @@
+# Meteor packages used by this project, one per line.
+# Check this file (and the other files in this directory) into your repository.
+#
+# 'meteor add' and 'meteor remove' will edit this file for you,
+# but you can also edit it by hand.
+
+meteor-platform
+email
+jquery-waypoints
+fastclick
+coffeescript
+accounts-password
+accounts-twitter
+service-configuration
+oauth1
+launch-screen
+request
+tmeasday:publish-counts@0.3.1
+iron:router@0.9.4
+percolate:velocityjs
+percolate:wireframing
+mdg:camera
+mdg:geolocation
+fourseven:scss
+reywood:bootstrap3-sass
+anti:i18n
+rajit:bootstrap3-datepicker
+wizonesolutions:underscore-string
+natestrauser:select2
+momentjs:moment
+numeral:numeral
+cfs:standard-packages
+cfs:filesystem
+cfs:ui
+# sergeyt:typeahead
+underscore
+reactive-var
+mrt:chartjs
+ian:accounts-ui-bootstrap-3
+alanning:roles
