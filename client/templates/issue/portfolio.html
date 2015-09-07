@@ -2,8 +2,90 @@
   <div class="portfolio">
   {{#if isAdmin}}
     <div class="well show-on-edit">
+      <div class="settings">
+        <div class="row">
+          {{! Min/Max }}
+          <div class="col-xs-6 col-md-3">
+            <div class="form-group">
+              <label>{{__ "issue.fields.minimum"}}</label>
+              <input type="number" class="form-control js-session return-modifier minimum" name="issue[portfolios][{{index}}][minimum]" value="{{minimum}}" step="0.01" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <div class="form-group">
+              <label>{{__ "issue.fields.maximum"}}</label>
+              <input type="number" class="form-control js-session return-modifier maximum" name="issue[portfolios][{{index}}][maximum]" value="{{maximum}}" step="0.01" />
+            </div>
+          </div>
+
+          {{! Participation }}
+          <div class="col-xs-6 col-md-3">
+            <div class="form-group">
+              <label>{{__ "issue.fields.participationFactor"}}</label>
+              <input type="number" class="form-control js-session return-modifier" name="issue[portfolios][{{index}}][participationFactor]" value="{{participationFactor}}" step="0.01" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <div class="form-group">
+              <label>{{__ "issue.fields.participationThreshold"}}</label>
+              <button type="button" class="btn btn-default js-toggle-participation-threshold">{{displayParticipationThreshold}}</button>
+              <input type="hidden" class="participation-threshold" name="issue[portfolios][{{index}}][settings][participationThreshold]" value="{{settings.participationThreshold}}" />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-6 col-md-3">
+            {{! Barrier }}
+            <div class="form-group">
+              <label>{{__ "issue.fields.barrierAmount"}}</label>
+              <input type="number" class="form-control js-session" name="issue[portfolios][{{index}}][barrierAmount]" value="{{barrierAmount}}" step="0.01" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <div class="form-group">
+              <label>{{__ "issue.fields.barrierType"}}</label>
+              <button type="button" class="btn btn-default js-toggle-barrier-type">{{displayBarrierType}}</button>
+              <input type="hidden" class="barrier-type" name="issue[portfolios][{{index}}][settings][barrierType]" value="{{settings.barrierType}}" />
+            </div>
+          </div>
+
+
+          {{! Additional }}
+          <div class="col-xs-6 col-md-3">
+            <div class="form-group">
+              <label>{{__ "issue.fields.bonusReturn"}}</label>
+              <input type="number" class="form-control js-session" name="issue[portfolios][{{index}}][bonusReturn]" value="{{bonusReturn}}" step="0.01" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <div class="form-group">
+              <label>{{__ "issue.fields.assigned"}}</label>
+              <input type="number" class="form-control js-session return-modifier local-return-modifier assigned" name="issue[portfolios][{{index}}][assigned]" value="{{assigned}}" step="0.01" />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-6 col-md-3">
+            <div class="form-group">
+              <label>{{__ "issue.fields.localMin"}}</label>
+              <input type="number" class="form-control js-session return-modifier local-return-modifier local-min" name="issue[portfolios][{{index}}][localMin]" value="{{localMin}}" step="0.01" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <div class="form-group">
+              <label>{{__ "issue.fields.localMax"}}</label>
+              <input type="number" class="form-control js-session return-modifier local-return-modifier local-max" name="issue[portfolios][{{index}}][localMax]" value="{{localMax}}" step="0.01" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+      {{! Checkmarks }}
       <div class="row">
-        <div class="col-sm-8">
+        <div class="col-xs-6 col-md-3">
           <div class="checkbox">
             <label>
               <input type="checkbox" class="js-session" name="issue[portfolios][{{index}}][settings][showTickerWeight]" checked="{{showTickerWeight}}"> {{__ "issue.properties.showTickerWeight"}}
@@ -15,103 +97,46 @@
               <input type="checkbox" class="js-session" name="issue[portfolios][{{index}}][settings][showTickerRanking]" checked="{{showTickerRanking}}"> {{__ "issue.properties.showTickerRanking"}}
             </label>
           </div>
-          <div class="form-inline">
-            <div class="form-group">
-              <label>{{__ "issue.properties.togglePortfolioReturn"}}</label>
-              <button type="button" class="btn btn-default js-toggle-portfolio-return-setting">{{displayPortfolioReturnSetting}}</button>
-              <input type="hidden" class="portfolio-return-setting" name="issue[portfolios][{{index}}][settings][portfolioReturn]" value="{{settings.portfolioReturn}}" />
-            </div>
-          </div>
-          <div class="form-inline">
-            <div class="form-group">
-              <label>{{__ "issue.properties.toggleModifiedPortfolioReturn"}}</label>
-              <button type="button" class="btn btn-default js-toggle-modified-portfolio-return-setting">{{displayModifiedPortfolioReturnSetting}}</button>
-              <input type="hidden" class="modified-portfolio-return-setting" name="issue[portfolios][{{index}}][settings][modifiedPortfolioReturn]" value="{{settings.modifiedPortfolioReturn}}" />
-            </div>
-          </div>
-          <div class="form-inline">
-            <div class="form-group">
-              <label>{{__ "issue.properties.toggleTickerAllFX"}}</label>
-              <button type="button" class="btn btn-default js-toggle-FX">{{displayTickerFXSetting}}</button>
-              <input type="hidden" class="ticker-fx-setting" name="issue[portfolios][{{index}}][settings][tickerFX]" value="{{settings.tickerFX}}" />
-            </div>
-          </div>
-          <div class="form-inline">
-            <div class="form-group">
-              <label>{{__ "issue.fields.maximum"}}</label>
-              <input type="number" class="form-control js-session return-modifier maximum" name="issue[portfolios][{{index}}][maximum]" value="{{maximum}}" step="0.01" />
-            </div>
-          </div>
-          <div class="form-inline">
-            <div class="form-group">
-              <label>{{__ "issue.fields.minimum"}}</label>
-              <input type="number" class="form-control js-session return-modifier minimum" name="issue[portfolios][{{index}}][minimum]" value="{{minimum}}" step="0.01" />
-            </div>
-          </div>
-          <div class="form-inline">
-            <div class="form-group">
-              <label>{{__ "issue.fields.participationFactor"}}</label>
-              <input type="number" class="form-control js-session return-modifier" name="issue[portfolios][{{index}}][participationFactor]" value="{{participationFactor}}" step="0.01" />
-            </div>
-          </div>
-          <div class="form-inline">
-            <div class="form-group">
-              <label>{{__ "issue.fields.participationThreshold"}}</label>
-              <button type="button" class="btn btn-default js-toggle-participation-threshold">{{displayParticipationThreshold}}</button>
-              <input type="hidden" class="participation-threshold" name="issue[portfolios][{{index}}][settings][participationThreshold]" value="{{settings.participationThreshold}}" />
-            </div>
-          </div>
-          <div class="form-inline">
-            <div class="form-group">
-              <label>{{__ "issue.fields.bonusReturn"}}</label>
-              <input type="number" class="form-control js-session" name="issue[portfolios][{{index}}][bonusReturn]" value="{{bonusReturn}}" step="0.01" />
-            </div>
-          </div>
-          <div class="form-inline">
-            <div class="form-group">
-              <label>{{__ "issue.fields.barrierAmount"}}</label>
-              <input type="number" class="form-control js-session" name="issue[portfolios][{{index}}][barrierAmount]" value="{{barrierAmount}}" step="0.01" />
-            </div>
-          </div>
-          <div class="form-inline">
-            <div class="form-group">
-              <label>{{__ "issue.fields.barrierType"}}</label>
-              <button type="button" class="btn btn-default js-toggle-barrier-type">{{displayBarrierType}}</button>
-              <input type="hidden" class="barrier-type" name="issue[portfolios][{{index}}][settings][barrierType]" value="{{settings.barrierType}}" />
-            </div>
-          </div>
-          <div class="form-inline">
-            <div class="form-group">
-              <label>{{__ "issue.fields.localMin"}}</label>
-              <input type="number" class="form-control js-session return-modifier local-return-modifier local-min" name="issue[portfolios][{{index}}][localMin]" value="{{localMin}}" step="0.01" />
-            </div>
-          </div>
-          <div class="form-inline">
-            <div class="form-group">
-              <label>{{__ "issue.fields.localMax"}}</label>
-              <input type="number" class="form-control js-session return-modifier local-return-modifier local-max" name="issue[portfolios][{{index}}][localMax]" value="{{localMax}}" step="0.01" />
-            </div>
-          </div>
-          <div class="form-inline">
-            <div class="form-group">
-              <label>{{__ "issue.fields.assigned"}}</label>
-              <input type="number" class="form-control js-session return-modifier local-return-modifier assigned" name="issue[portfolios][{{index}}][assigned]" value="{{assigned}}" step="0.01" />
-            </div>
+        </div>
+
+        {{! Toggles }}
+        <div class="col-xs-6 col-md-3">
+          <div class="form-group">
+            <label>{{__ "issue.properties.togglePortfolioReturn"}}</label>
+            <button type="button" class="btn btn-default js-toggle-portfolio-return-setting">{{displayPortfolioReturnSetting}}</button>
+            <input type="hidden" class="portfolio-return-setting" name="issue[portfolios][{{index}}][settings][portfolioReturn]" value="{{settings.portfolioReturn}}" />
           </div>
         </div>
-        <hr class="visible-xs" />
-        <div class="col-sm-4">
-          <p>{{__ "issue.help.portfolioControls"}}</p>
-          <button type="button" class="btn btn-xs btn-success js-add-portfolio">
-            <span class="glyphicon glyphicon-plus" title="{{__ "common.actions.add" }}"></span>
-          </button>
-          <button type="button" class="btn btn-xs btn-danger js-remove-portfolio">
-            <span class="glyphicon glyphicon-minus" title="{{__ "common.actions.remove" }}"></span>
-          </button>
+        <div class="col-xs-6 col-sm-4 col-md-3">
+          <div class="form-group">
+            <label>{{__ "issue.properties.toggleModifiedPortfolioReturn"}}</label>
+            <button type="button" class="btn btn-default js-toggle-modified-portfolio-return-setting">{{displayModifiedPortfolioReturnSetting}}</button>
+            <input type="hidden" class="modified-portfolio-return-setting" name="issue[portfolios][{{index}}][settings][modifiedPortfolioReturn]" value="{{settings.modifiedPortfolioReturn}}" />
+          </div>
         </div>
+        <div class="col-xs-6 col-sm-4 col-md-3">
+          <div class="form-group">
+            <label>{{__ "issue.properties.toggleTickerAllFX"}}</label>
+            <button type="button" class="btn btn-default js-toggle-FX">{{displayTickerFXSetting}}</button>
+            <input type="hidden" class="ticker-fx-setting" name="issue[portfolios][{{index}}][settings][tickerFX]" value="{{settings.tickerFX}}" />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-inline text-muted">
+        <label>{{__ "issue.help.portfolioControls"}}</label>
+        <button type="button" class="btn btn-xs btn-circle btn-success js-add-portfolio">
+          <span class="glyphicon glyphicon-plus" title="{{__ "common.actions.add" }}"></span>
+        </button>
+        <button type="button" class="btn btn-xs btn-circle btn-danger js-remove-portfolio">
+          <span class="glyphicon glyphicon-minus" title="{{__ "common.actions.remove" }}"></span>
+        </button>
       </div>
     </div>
   {{/if}}
+
+
+
 
   <div class="table-responsive">
     <table class="table table-condensed form-inline">
@@ -166,7 +191,7 @@
             {{#if hasLocalReturnModifier}}<td colspan={{Col2b}}><p class="form-control-static">{{displayModifiedPortfolioReturn}}</p></td>{{/if}}
             {{#if isAdmin}}<td class="show-on-edit" colspan="2"></td>{{/if}}
           </tr>
-    
+
           {{#if hasParticipationFactor}}
             <tr>
               <td colspan="{{Col1}}">{{__ "issue.nouns.multipliedReturn"}}</td>
@@ -192,11 +217,11 @@
         </tfoot>
       {{/if}}
     </table>
-    
 
-    
 
-    
+
+
+
   </div>
   </div>
 </template>
