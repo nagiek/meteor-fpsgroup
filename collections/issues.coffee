@@ -85,9 +85,12 @@
 
   # Booleans
   hasFXExposure: Boolean
-  
-Meteor.methods 
+
+Meteor.methods
   saveIssue: (id, issue) ->
+
+    if not isAdmin() then throw new Meteor.Error('not-authorized');
+
     # check issue,
     #   _id: Match.Optional(String)
     #   titleEN: String
@@ -96,13 +99,13 @@ Meteor.methods
     #   slugFR: String
     #   issuanceDate: Date
     #   maturityDate: Date
-    
-    if id 
+
+    if id
 
       issue.updatedAt = new Date()
 
       Issues.update id, $set: issue
-      
+
 
     else
       issue.createdAt = new Date()
@@ -111,14 +114,17 @@ Meteor.methods
       id = Issues.insert issue
 
     id
-    
+
   saveIssueProperty: (id, key, value) ->
+
+    if not isAdmin() then throw new Meteor.Error('not-authorized');
+
     check id, String
     check key, String
 
     # Inspired by serializeJSON#splitInputNameIntoKeysArray
     # Recursive function to turn keys into an object.
-    fillObject = (container) -> 
+    fillObject = (container) ->
       key = keys.shift()
       unless isNaN(key) then key = parseInt key
       unless keys.length is 0
@@ -128,13 +134,15 @@ Meteor.methods
       else
         container[key] = value
       container
-  
-    keys = key.split(".")  
+
+    keys = key.split(".")
     data = fillObject {}
 
     Issues.update id, $set: data
 
   deleteIssue: (_id) ->
+    if not isAdmin() then throw new Meteor.Error('not-authorized');
+
     check _id, String
     Issues.remove _id
 

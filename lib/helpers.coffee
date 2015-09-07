@@ -1,12 +1,12 @@
-@isAdmin = -> true
+@isAdmin = -> Meteor.user() and Meteor.user().admin
 
 Meteor.startup ->
   UI.registerHelper 'log', (variable) -> console.log variable
-  
-  UI.registerHelper 'withIndex', (all) -> 
+
+  UI.registerHelper 'withIndex', (all) ->
     _.map all, (val, index) -> val.index = index
     all
-  
+
   @pluralize = (n, thing, options) ->
     plural = thing
     if _.isUndefined(n)
@@ -19,7 +19,7 @@ Meteor.startup ->
     if options and options.hash and options.hash.wordOnly
       plural
     else
-      n + " " + plural      
+      n + " " + plural
   UI.registerHelper "pluralize", pluralize
 
   @selectFreeDay = (date, inc, forbiddenDates) ->
@@ -29,7 +29,7 @@ Meteor.startup ->
       selectFreeDay date.add(inc, "day"), inc, forbiddenDates
     else
       date
-      
+
   DIMENSIONS =
     small: "320x350"
     large: "640x480"
@@ -40,7 +40,7 @@ Meteor.startup ->
     "/img/recipes/" + DIMENSIONS[size] + "/" + options.hash.recipe.name + ".jpg"  if options.hash.recipe
 
   UI.registerHelper "activePage", ->
-    
+
     # includes Spacebars.kw but that's OK because the route name ain't that.
     routeNames = arguments
     _.include(routeNames, Router.current().route.name) and "active"

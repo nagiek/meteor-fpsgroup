@@ -4,5 +4,7 @@ Template.issues.helpers
       sort:
         issuanceDate: -1
 
+  isAdmin: isAdmin
+
   ready: ->
     Router.current().issuesSubscription.ready()

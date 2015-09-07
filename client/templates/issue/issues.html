@@ -8,7 +8,9 @@
       <div class="list-subtitle">What's for sale</div>
       <div class="list-recipes {{#unless ready}}loading{{/unless}}">
         {{#if ready}}
+          {{#if isAdmin}}
           <a href="{{pathFor 'newIssue'}}" class="btn btn-default">{{__ "issue.actions.new"}}</a>
+          {{/if}}
           {{#each currentIssues}}
             {{> issuesItem}}
           {{else}}

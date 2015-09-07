@@ -9,12 +9,14 @@
   <header class="clearfix">
     <h1>{{lang "title" "issue.actions.new"}}</h1>
     <ul class="list-inline left-sm">
+      {{#if isAdmin}}
       <li>
         <button type="button" class="btn btn-default js-edit-issue {{editingActive}}{{#unless _id}} disabled{{/unless}}">
           <span class="glyphicon glyphicon-edit"></span>
           {{__ "common.actions.edit" }}
         </button>
       </li>
+      {{/if}}
       <li>
         <button type="button" class="btn btn-default js-launch-modal" data-toggle="modal" data-target=".portfolios-modal">
           {{! glyphicon-pie-chart }}
@@ -64,12 +66,14 @@
         </button>
       </li>
       {{/if}}
+      {{#if isAdmin}}
       <li class="show-on-edit">
         <button type="submit" class="js-save-issue btn btn-primary">{{__ "common.actions.save" }}</button>
       </li>
       <li class="show-on-edit">
         <button type="button" class="js-reset btn btn-default">{{__ "common.actions.reset" }}</button>
       </li>
+      {{/if}}
     </ul>
   </header>
 
