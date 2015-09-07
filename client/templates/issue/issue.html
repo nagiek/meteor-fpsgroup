@@ -1,5 +1,5 @@
 <template name="issue">
-  
+
   {{currentBid}}
   {{currentETC}}
   {{currentNetBid}}
@@ -84,7 +84,7 @@
       </span>
     </div>
   </div>
-    
+
 
   <div class="form-group">
     <label for="issue[titleFR]" class="control-label col-sm-2">{{__ "common.fields.title" }} {{__ "common.langs.FR" }}</label>
@@ -95,8 +95,8 @@
       </span>
     </div>
   </div>
-    
-    
+
+
   <div class="form-group">
     <label for="issue[issuanceDate]" class="control-label col-sm-2">{{__ "issue.fields.issuanceDate" }}</label>
     <div class="col-sm-10">
@@ -106,7 +106,7 @@
       </span>
     </div>
   </div>
-    
+
   <div class="form-group">
     <label for="issue[term]" class="control-label col-sm-2">{{__ "issue.fields.term" }}</label>
     <div class="col-sm-10">
@@ -116,7 +116,7 @@
       </span>
     </div>
   </div>
-    
+
   <div class="form-group">
     <label for="issue[maturityDate]" class="control-label col-sm-2">{{__ "issue.fields.maturityDate" }}</label>
     <div class="col-sm-10">
@@ -142,12 +142,12 @@
       </span>
     </div>
   </div>
-    
+
   <div class="show-on-edit {{existed}}">
     <button type="button" class="js-delete-issue btn btn-danger">{{__ "common.actions.delete" }}</button>
   </div>
   </form>
-  
+
   <div class="modal fade portfolios-modal" tabindex="-1" role="dialog" aria-labelledby="portfolios-label" aria-hidden="true">
     <form class="modal-form portfolios-form {{editing}}">
       <div class="modal-dialog {{editingModal}}">
@@ -160,7 +160,7 @@
               {{__ "common.actions.edit" }}
             </button>
             </h3>
-            
+
           </div>
           <div class="modal-body">
             {{#each withIndex portfolios}}
@@ -195,7 +195,7 @@
               {{__ "common.actions.edit" }}
             </button>
             </h3>
-            
+
           </div>
           <div class="modal-body">
             <div class="table-responsive">
@@ -233,8 +233,8 @@
       </div>
     </form>
   </div>
-  
-  <div class="modal fade documents-modal" tabindex="-1" role="dialog" aria-labelledby="documents-label" aria-hidden="true">  
+
+  <div class="modal fade documents-modal" tabindex="-1" role="dialog" aria-labelledby="documents-label" aria-hidden="true">
     <form class="modal-form documents-form {{editing}}">
       <div class="modal-dialog {{editingModal}}">
         <div class="modal-content">
@@ -246,7 +246,7 @@
               {{__ "common.actions.edit" }}
             </button>
             </h3>
-            
+
           </div>
           <div class="modal-body">
             <div class="show-on-view">
@@ -296,8 +296,8 @@
       </div>
     </form>
   </div>
-  
-  <div class="modal fade etc-modal" tabindex="-1" role="dialog" aria-labelledby="etc-label" aria-hidden="true">  
+
+  <div class="modal fade etc-modal" tabindex="-1" role="dialog" aria-labelledby="etc-label" aria-hidden="true">
     <form class="modal-form etc-form {{editing}}">
       <div class="modal-dialog {{editingModal}}">
         <div class="modal-content">
@@ -309,7 +309,7 @@
               {{__ "common.actions.edit" }}
             </button>
             </h3>
-            
+
           </div>
           <div class="modal-body">
             {{#if isAdmin}}
@@ -379,9 +379,9 @@
       </div>
     </form>
   </div>
-  
+
   {{#if hasDistributions}}
-  <div class="modal fade distr-modal" tabindex="-1" role="dialog" aria-labelledby="distr-label" aria-hidden="true">  
+  <div class="modal fade distr-modal" tabindex="-1" role="dialog" aria-labelledby="distr-label" aria-hidden="true">
     <form class="modal-form distr-form {{editing}}">
       <div class="modal-dialog {{editingModal}}">
         <div class="modal-content">
@@ -393,7 +393,7 @@
               {{__ "common.actions.edit" }}
             </button>
             </h3>
-            
+
           </div>
           <div class="modal-body">
             {{#if isAdmin}}
@@ -452,9 +452,9 @@
     </form>
   </div>
   {{/if}}
-  
+
   {{#if hasCalls}}
-  <div class="modal fade call-modal" tabindex="-1" role="dialog" aria-labelledby="call-label" aria-hidden="true">  
+  <div class="modal fade call-modal" tabindex="-1" role="dialog" aria-labelledby="call-label" aria-hidden="true">
     <form class="modal-form call-form {{editing}}">
       <div class="modal-dialog {{editingModal}}">
         <div class="modal-content">
@@ -466,7 +466,7 @@
               {{__ "common.actions.edit" }}
             </button>
             </h3>
-            
+
           </div>
           <div class="modal-body">
             {{#if isAdmin}}
@@ -525,9 +525,9 @@
     </form>
   </div>
   {{/if}}
-  
+
   {{#if hasFixings}}
-  <div class="modal fade fixing-modal" tabindex="-1" role="dialog" aria-labelledby="fixing-label" aria-hidden="true">  
+  <div class="modal fade fixing-modal" tabindex="-1" role="dialog" aria-labelledby="fixing-label" aria-hidden="true">
     <form class="modal-form fixing-form {{editing}}">
       <div class="modal-dialog {{editingModal}}">
         <div class="modal-content">
@@ -539,7 +539,7 @@
               {{__ "common.actions.edit" }}
             </button>
             </h3>
-            
+
           </div>
           <div class="modal-body">
             {{#if isAdmin}}

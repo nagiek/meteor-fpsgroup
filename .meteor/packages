@@ -21,8 +21,6 @@ percolate:velocityjs
 percolate:wireframing
 mdg:camera
 mdg:geolocation
-fourseven:scss
-reywood:bootstrap3-sass
 anti:i18n
 rajit:bootstrap3-datepicker
 wizonesolutions:underscore-string
@@ -38,3 +36,8 @@ reactive-var
 mrt:chartjs
 ian:accounts-ui-bootstrap-3
 alanning:roles
+reactjs:react
+fortawesome:fontawesome
+fourseven:scss
+reywood:bootstrap3-sass
+chriswessels:glyphicons-halflings

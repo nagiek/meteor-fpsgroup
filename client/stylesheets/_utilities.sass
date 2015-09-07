@@ -154,13 +154,9 @@ ul.list-inline, ol.list-inline
 
 
 
-
-@media (max-width: $screen-xs-max)
+@media (min-width: $screen-xs-max)
   .clearfix-xs
-    @extend .clearfix
-
-
-
+    @include clearfix
 
 @media (min-width:$screen-sm-min)
   .left-sm
