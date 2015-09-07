@@ -1,5 +1,15 @@
 @Issues = new Mongo.Collection("issues")
 
+Issues.allow
+  insert: isAdminFromId
+  update: isAdminFromId
+  delete: isAdminFromId
+
+isAdminFromId = (userId) ->
+    user = Meteor.users.findOne(userId)
+    isAdmin user
+
+
 @IssuesSchema =
 
   # Lanuage-specific
