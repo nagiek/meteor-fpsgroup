@@ -25,7 +25,7 @@ Router.configure
 # Keep showing the launch screen on mobile devices until we have loaded
 # the app's data
 @dataReadyHold = LaunchScreen.hold()  if Meteor.isClient
-  
+
 @HomeController = RouteController.extend
   waitOn: -> [issuesSubscription]
   onBeforeAction: ->
@@ -58,7 +58,7 @@ Router.configure
       @render()
     else
       @render "loading"
-      
+
 @IssueController = RouteController.extend
   waitOn: -> [Meteor.subscribe("issue",  @params._id), publicFilesSubscription, privateFilesSubscription, structureFilesSubscription]
   data: -> Issues.findOne @params._id
@@ -103,7 +103,7 @@ Router.map ->
   @route "issues"
   @route "structures"
 
-  @route "newIssue", 
+  @route "newIssue",
     path: "/issues/new"
     action: -> @render "issue"
   @route "issue", path: "/issues/:_id"
@@ -118,3 +118,8 @@ Router.map ->
 Router.onBeforeAction "dataNotFound",
   only: "recipe", "issue"
 
+
+@routeIsTopLevel = ->
+  # XXX: update to the following when IR 1.0 hits
+  #      Router.current().route.getName()
+  _.contains ["home", "issues", "user", "admin"], Router.current().route.name

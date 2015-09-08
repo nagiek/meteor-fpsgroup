@@ -3,9 +3,9 @@
 Issues.allow
   insert: isAdminFromId
   update: isAdminFromId
-  delete: isAdminFromId
+  remove: isAdminFromId
 
-isAdminFromId = (userId) ->
+isAdminFromId = (userId, document) ->
     user = Meteor.users.findOne(userId)
     isAdmin user
 

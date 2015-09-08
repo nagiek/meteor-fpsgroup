@@ -8,11 +8,12 @@ Session.setDefault MENU_KEY, false
 
 # XXX: this work around until IR properly supports this
 #   IR refactor will include Location.back, which will ensure that initator is
-#   set 
+#   set
 nextInitiator = null
 initiator = null
-Deps.autorun ->
-  
+
+Tracker.autorun ->
+
   # add a dep
   Router.current()
   initiator = nextInitiator
@@ -30,7 +31,7 @@ Template.appBody.addNotification = (notification) ->
   return
 
 Meteor.startup ->
-  
+
   # set up a swipe left / right handler
   $(document.body).touchwipe
     wipeLeft: ->
@@ -43,14 +44,14 @@ Meteor.startup ->
 
     preventDefaultEvents: false
 
-  
+
   # Only show the connection error box if it has been 5 seconds since
   # the app started
   setTimeout (->
-    
+
     # Launch screen handle created in lib/router.js
     dataReadyHold.release()
-    
+
     # Show the connection error box
     Session.set SHOW_CONNECTION_ISSUE_KEY, true
     return
@@ -60,9 +61,11 @@ Meteor.startup ->
 Template.appBody.rendered = ->
   @find("#content")._uihooks =
     insertElement: (node, next) ->
-      
+
       # short-circuit and just do it right away
       return $(node).insertBefore(next)  if initiator is "menu"
+      # Fade in / fade out for switch?
+      return $(node).insertBefore(next)  if initiator is "switch"
       start = (if (initiator is "back") then "-100%" else "100%")
       $.Velocity.hook node, "translateX", start
       $(node).insertBefore(next).velocity
@@ -79,6 +82,8 @@ Template.appBody.rendered = ->
 
     removeElement: (node) ->
       return $(node).remove()  if initiator is "menu"
+      # Fade in / fade out for switch?
+      return $(node).remove()  if initiator is "switch"
       end = (if (initiator is "back") then "100%" else "-100%")
       $(node).velocity
         translateX: end
@@ -133,11 +138,11 @@ Template.appBody.helpers
     notifications.find()
 
   isAdmin: isAdmin
-    
+
   # Language
   isEnglish: -> i18n.getLanguage().substring(0,2).toLowerCase() is 'en'
   isFrench: -> i18n.getLanguage().substring(0,2).toLowerCase() is 'fr'
-    
+
 Template.appBody.events
   "click .js-menu": (event) ->
     event.stopImmediatePropagation()
@@ -145,9 +150,14 @@ Template.appBody.events
     Session.set MENU_KEY, not Session.get(MENU_KEY)
     return
 
+  "click #primary-nav a": (event) ->
+    alreadyTopLevel = routeIsTopLevel()
+    nextInitiator = if alreadyTopLevel then "switch" else "back"
+    return
+
   "click .js-back": (event) ->
     nextInitiator = "back"
-    
+
     # XXX: set the back transition via Location.back() when IR 1.0 hits
     history.back()
     event.stopImmediatePropagation()
@@ -155,7 +165,7 @@ Template.appBody.events
     return
 
   "click a.js-open": (event) ->
-    
+
     # On Cordova, open links in the system browser rather than In-App
     if Meteor.isCordova
       event.preventDefault()
@@ -177,6 +187,6 @@ Template.appBody.events
       @callback()
       notifications.remove @_id
     return
-  
+
   "click #js-switch-english": (e) -> e.preventDefault(); i18n.setLanguage("en"); moment.lang("en"); numeral.language('en')
   "click #js-switch-french" : (e) -> e.preventDefault(); i18n.setLanguage("fr"); moment.lang("fr"); numeral.language('fr')
