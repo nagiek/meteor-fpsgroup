@@ -1,3 +1,6 @@
+@isEnglish = -> i18n.getLanguage().substring(0,2).toLowerCase() is 'en'
+@isFrench = -> i18n.getLanguage().substring(0,2).toLowerCase() is 'fr'
+
 Meteor.startup ->
   if Meteor.isClient
     if Meteor.user()
@@ -21,13 +24,13 @@ Meteor.startup ->
     output = this[string+language] unless output
     output = i18n(fallback) unless output
     output
-    
+
   # Same as lang, but without Session variable.
   UI.registerHelper 'langStatic', (string, fallback) ->
     language = i18n.getLanguage().substring(0,2).toUpperCase()
     output = this[string+language]
     output = i18n(fallback) unless output
     output
-    
+
   UI.registerHelper '__', ->
     i18n.apply this, arguments

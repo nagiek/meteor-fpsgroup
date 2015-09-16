@@ -1,9 +1,9 @@
 ###
 Translation strings for the entire site.
 ###
-i18n.map 'en', 
-            
-  ## Common ##     
+i18n.map 'en',
+
+  ## Common ##
   "common.classes.issues":                          "Issues"
   "common.classes.structures":                      "Structures"
 
@@ -19,7 +19,7 @@ i18n.map 'en',
   "common.actions.reset":                           "Reset"
   "common.actions.remove":                          "Remove"
   "common.actions.upload":                          "Upload"
-  
+
   "common.nouns.actions":                           "Actions"
   "common.nouns.admin":                             "Admin"
   "common.nouns.amount":                            "Amount"
@@ -32,32 +32,33 @@ i18n.map 'en',
   "common.nouns.number":                            "Number"
   "common.nouns.ranking":                           "Ranking"
   "common.nouns.weight":                            "Weight"
-  
+
   "common.langs.EN":                                "EN"
   "common.langs.FR":                                "FR"
   "common.langs.english":                           "English"
   "common.langs.french":                            "French"
-  
+
   "common.empty.search":                            "Nothing matches your search"
-  
+
   "common.expressions.mark_read":                   "Mark read"
   "common.expressions.see_all":                     "See all"
-  
+
   "common.conjuctions.and":                         "and"
   "common.conjuctions.or":                          "or"
-  
+
   "common.numbers.formats.input":                   "0"
   "common.numbers.formats.currency":                "0,0.00"
   "common.numbers.formats.percent":                 "0%"
-  
+
   "common.prepositions.from":                       "From"
   "common.prepositions.in":                         "In"
   "common.prepositions.to":                         "To"
-  
+  "common.prepositions.about":                      "About"
+
   "common.dates.formats.medium":                    "MMM D, YYYY"
   "common.dates.formats.input":                     "yyyy-mm-dd"
   "common.dates.formats.output":                    "YYYY-MM-DD"
-  
+
   "common.fields.title":                            "Title"
   "common.fields.body":                             "Body"
   "common.fields.email":                            "Email"
@@ -67,14 +68,14 @@ i18n.map 'en',
   "common.fields.name":                             "Name"
   "common.fields.posted":                           "Posted"
   "common.fields.posted_at":                        "Posted at"
-          
+
   "common.messages.saved":                          "Saved"
   "common.errors.notSaved":                         "Not saved"
   "common.errors.required":                         "Required"
   "common.errors.missing":                          "Missing"
-  
 
-  ## Issue ##              
+
+  ## Issue ##
   "issue.meta.className":                           "Issue"
   "issue.meta.className_plural":                    "Issues"
   "issue.actions.new":                              "New Issue"
@@ -163,7 +164,7 @@ i18n.map 'en',
   "issue.properties.showTickerWeight":              "Show Ticker Weight"
   "issue.properties.showTickerRanking":             "Show Ticker Ranking"
   "issue.properties.toggleTickerAllFX":             "Toggle FX (all tickers)"
-  "issue.properties.togglePortfolioReturn":         "Toggle Portfolio Return"         
+  "issue.properties.togglePortfolioReturn":         "Toggle Portfolio Return"
   "issue.properties.toggleModifiedPortfolioReturn": "Toggle Modified Portfolio Return"
   "issue.returns.none":                             "None"
   "issue.returns.average":                          "Average"
@@ -171,16 +172,16 @@ i18n.map 'en',
   "issue.returns.max":                              "Max"
   "issue.returns.addition":                         "Addition"
   "issue.returns.geometric":                        "Geometric"
-  
-  ## Price ##  
+
+  ## Price ##
   "price.actions.save_all":                         "Save all"
   "price.actions.save_new":                         "Save new"
   "price.actions.edit_mode":                        "Bulk edit"
   "price.actions.delete_mode":                      "Allow delete"
-  
-  
-  
-  ## User ##              
+
+
+
+  ## User ##
   "user.actions.signin":                            "Sign in"
   "user.actions.signup":                            "Sign up"
   "user.actions.logout":                            "Log out"
@@ -198,7 +199,7 @@ i18n.map 'en',
   "user.actions.back_to_profile":                   "Back to profile"
   "user.actions.switch_signup":                     "Don't have an account?"
   "user.actions.switch_login":                      "Already have an account?"
-    
+
   "user.menu.view_profile":                         "Profile"
   "user.menu.edit_profile":                         "Edit profile"
   "user.menu.edit_my_profile":                      "Edit my profile"
@@ -210,7 +211,7 @@ i18n.map 'en',
   "user.menu.account_settings":                     "Account settings"
   "user.menu.privacy_settings":                     "Privacy settings"
   "user.menu.profile_menu":                         "Profile menu"
-  
+
   "user.fields.name":                               "Name"
   "user.fields.first_name":                         "First Name"
   "user.fields.last_name":                          "Last Name"
@@ -222,7 +223,7 @@ i18n.map 'en',
   "user.fields.gender.female":                      "Female"
   "user.fields.birthday":                           "Birthday"
   "user.fields.avatar":                             "Picture"
-  
+
   "user.form.email":                                "Email"
   "user.form.password":                             "Password"
   "user.form.password_change_hint":                 "Leave blank if you don't want to change it"
@@ -234,9 +235,9 @@ i18n.map 'en',
   "user.form.new_password_confirm":                 "Confirm new password"
   "user.form.send_instructions":                    "Send instructions"
   "user.form.instructions_to_email":                "Instructions to change your password will be emailed to you."
-  
+
   "user.messages.password_reset":                   "We have sent a link to reset your password to your email"
-  
+
   "user.errors.logged_in":                          "You must be logged in to do that."
   "user.errors.invalid_birthday":                   "You did not enter a correct birthday."
   "user.errors.username_doesnt_exist":              "We don't have that email in our system. Why not sign up?"
@@ -249,8 +250,8 @@ i18n.map 'en',
   "user.errors.invalid_login_parameters":           "You have entered an incorrect email or password."
   "user.errors.missing_passwords":                  "You must confirm your password to change it."
   "user.errors.unmatching_passwords":               "The passwords you entered do not match."
-  
-  # mailing  
+
+  # mailing
   "mailer.general.greeting":                        "Hello %{name}"
   "mailer.general.welcome":                         "Welcome %{person}!"
   "mailer.reset_password.explanation":              "Someone has requested a link to change your password. You can do this through the link below."

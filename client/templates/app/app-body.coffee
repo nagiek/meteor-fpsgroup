@@ -6,6 +6,7 @@ CONNECTION_ISSUE_TIMEOUT = 5000
 Session.setDefault SHOW_CONNECTION_ISSUE_KEY, false
 Session.setDefault MENU_KEY, false
 
+
 # XXX: this work around until IR properly supports this
 #   IR refactor will include Location.back, which will ensure that initator is
 #   set
@@ -140,8 +141,8 @@ Template.appBody.helpers
   isAdmin: isAdmin
 
   # Language
-  isEnglish: -> i18n.getLanguage().substring(0,2).toLowerCase() is 'en'
-  isFrench: -> i18n.getLanguage().substring(0,2).toLowerCase() is 'fr'
+  isEnglish: -> isEnglish()
+  isFrench: -> isFrench()
 
 Template.appBody.events
   "click .js-menu": (event) ->
