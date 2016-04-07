@@ -1,5 +1,6 @@
 <template name="overlay">
-  <div id="overlay-hook">
+  <div id="overlay-hook" class="modal fade {{#if isOpen}}in{{/if}}" style="{{#if isOpen}}display: block;{{/if}}">
     {{> Template.dynamic template=template data=data}}
   </div>
+  {{#if isOpen}}<div class="modal-backdrop fade {{#if isOpen}}in{{/if}}"></div>{{/if}}
 </template>

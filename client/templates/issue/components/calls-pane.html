@@ -1,0 +1,73 @@
+<template name="callsPane">
+  {{#if isAdmin}}
+  <div class="well show-on-edit">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" class="js-autosave" name="issue[hasCallValDate]" checked="{{hasCallValDate}}"> {{__ "issue.properties.hasCallValDate"}}
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" class="js-autosave" name="issue[hasCallThreshold]" checked="{{hasCallThreshold}}"> {{__ "issue.properties.hasCallThreshold"}}
+      </label>
+    </div>
+  </div>
+  {{/if}}
+  <div class="table-responsive">
+  <table class="table calls form-inline">
+    <thead>
+      <tr>
+        {{#if hasCallValDate}}
+          <th>{{__ "issue.nouns.valuationDate"}}</th>
+        {{/if}}
+        <th>{{__ "issue.nouns.paymentDate"}}</th>
+        {{#if hasCallThreshold}}
+          <th>{{__ "issue.nouns.threshold"}}</th>
+        {{/if}}
+        <th>{{__ "common.nouns.amount"}}</th>
+        <th>{{! operations }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each calls}}
+        {{> callDate}}
+      {{else}}
+        <tr>
+          <td colspan="100%">
+            {{__ "issue.empty.calls"}}
+            {{#if isAdmin}}
+              <button type="button" class="btn btn-mini btn-success show-on-edit js-add-call">
+                <span class="glyphicon glyphicon-plus" title="{{__ "common.actions.add" }}"></span>
+              </button>
+            {{/if}}
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  </div>
+  <!-- <form class="modal-form call-form {{editing}}">
+    <div class="modal-dialog {{editingModal}}">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="{{__ "common.actions.close"}}"><span aria-hidden="true">&times;</span></button>
+          <h3 id="call-label" class="modal-title">{{__ "issue.nouns.callSchedule" }}
+          {{#if isAdmin}}
+          <button type="button" class="btn btn-default js-edit-issue {{editingActive}}{{#unless _id}} disabled{{/unless}}">
+            <span class="glyphicon glyphicon-edit"></span>
+            {{__ "common.actions.edit" }}
+          </button>
+          {{/if}}
+          </h3>
+
+        </div>
+        <div class="modal-body">
+
+        </div>
+        <div class="modal-footer show-on-edit">
+          <button type="submit" class="js-save-issue btn btn-primary">{{__ "common.actions.save" }}</button>
+        </div>
+      </div>
+    </div>
+  </form> -->
+</template>

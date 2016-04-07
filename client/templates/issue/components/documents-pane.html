@@ -1,0 +1,65 @@
+<template name="documentsPane">
+  <div class="show-on-view">
+    <ul>
+    {{#each privateFiles}}
+      <li><a href="{{this.url download=true}}">{{i18nFile this.doc}}</a></li>
+    {{/each}}
+    {{#each publicFiles}}
+      <li><a href="{{this.url download=true}}">{{i18nFile this.doc}}</a></li>
+    {{/each}}
+    </ul>
+  </div>
+  <div class="show-on-edit">
+    <div class="form-group">
+       <!-- blueimp HTML -->
+       <!-- <span class="btn btn-success fileinput-button">
+            <i class="glyphicon glyphicon-plus"></i>
+            <span>Add files...</span>
+            <input type="file" name="files">
+        </span> -->
+      <label for="issue[greensheetEN]">{{__ "issue.docs.greensheet"}} {{__ "common.langs.EN"}}</label>
+      <input type="file" name="issue[greensheetEN]" class="file-input">
+      {{#with greensheetEN}}
+        {{#unless this.isUploaded}}
+          {{> FS.UploadProgressBar bootstrap=true}}
+        {{else}}
+          <strong>{{this.name}}</strong> <a href="{{this.url download=true}}" class="btn btn-link">{{__ "common.actions.download" }}</a>
+          {{#FS.DeleteButton class="btn btn-link"}}{{__ "common.actions.remove"}}{{/FS.DeleteButton}}
+        {{/unless}}
+      {{/with}}
+    </div>
+    <label for="issue[greensheetFR]">{{__ "issue.docs.greensheet"}} {{__ "common.langs.FR"}}</label>
+    <input type="file" name="issue[greensheetFR]" class="file-input">
+    <div class="form-group">
+      {{#with greensheetFR}}
+        {{#unless this.isUploaded}}
+          {{> FS.UploadProgressBar bootstrap=true}}
+        {{else}}
+          <strong>{{this.name}}</strong> <a href="{{this.url download=true}}" class="btn btn-link">{{__ "common.actions.download" }}</a>
+          {{#FS.DeleteButton class="btn btn-link"}}{{__ "common.actions.remove"}}{{/FS.DeleteButton}}
+        {{/unless}}
+      {{/with}}
+    </div>
+  </div>
+  <!-- <form class="modal-form documents-form {{editing}}">
+    <div class="modal-dialog {{editingModal}}">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="{{__ "common.actions.close"}}"><span aria-hidden="true">&times;</span></button>
+          <h3 id="documents-label" class="modal-title">{{__ "common.nouns.documents" }}
+          {{#if isAdmin}}
+          <button type="button" class="btn btn-default js-edit-issue {{editingActive}}{{#unless _id}} disabled{{/unless}}">
+            <span class="glyphicon glyphicon-edit"></span>
+            {{__ "common.actions.edit" }}
+          </button>
+          {{/if}}
+          </h3>
+
+        </div>
+        <div class="modal-body">
+
+        </div>
+      </div>
+    </div>
+  </form> -->
+</template>

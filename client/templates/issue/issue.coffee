@@ -1,9 +1,8 @@
 EDITING_KEY = "EDITING_ISSUE_ID"
-MODAL_SHOWING = "MODAL_SHOWING"
+CURRENT_ISSUE_TAB = "CURRENT_ISSUE_TAB"
 VAL_DATE_OFFSET = 3
 
 Session.setDefault EDITING_KEY, false
-Session.setDefault MODAL_SHOWING, false
 
 bids = null
 curr = null
@@ -15,11 +14,17 @@ originalData = {}
 issueDefaults =
   curr: "CAD"
 
+Template.issue.validators = Template.issue.validators or {}
+
 Template.issue.created = ->
   @data = {} unless @data
+
   _.defaults @data, issueDefaults
 
   _.each IssuesSchema, (v, k) => Template.convertToSession(v, k, @data)
+
+  # Reset to general for each time we come to this page
+  Session.setDefault(CURRENT_ISSUE_TAB, "general")
 
   originalData = _.clone @data
 
@@ -39,6 +44,8 @@ Template.issue.destroyed = ->
 
   @$('.datepicker').datepicker("remove")
 
+  Session.set(CURRENT_ISSUE_TAB, null)
+
   $(window).off(chartResizeFn)
 
 Template.issue.rendered = ->
@@ -52,8 +59,8 @@ Template.issue.googleGraph = ->
 
   return unless bids and not _.isEmpty bids
 
-  chartData = _(bids).map(_.values)
-
+  # chartData = _(bids).map(_.values)
+  chartData = _(bids).map((bid) -> [new Date(bid.date), Number(bid.amount)])
   data = new google.visualization.DataTable
   data.addColumn 'date', i18n("common.nouns.date")
   data.addColumn 'number', i18n("common.nouns.amount")
@@ -73,18 +80,18 @@ Template.issue.googleGraph = ->
 #     height: 600
     legend:
       position: "none"
-    # This doesn't work argh why?
 
 
   graph = new (google.charts.Line)(document.getElementById("chart"))
   drawGraph = ->
-    options.height = Math.round(window.innerWidth * 0.35)
+    options.height = Math.round(window.innerWidth * 0.20)
     graph.draw(data, options)
   chartResizeFn = $(window).on("resize", _.throttle(drawGraph, 1000))
   drawGraph()
 
 
 Template.issue.helpers
+
   existed: -> !@_id and "hide"
 
   editing: ->
@@ -109,6 +116,8 @@ Template.issue.helpers
 
   # Conditions
   isAdmin: -> isAdmin()
+  isActive: (tab) ->
+    tab is Session.get(CURRENT_ISSUE_TAB) and "active"
 
   # Language
   isEnglish: -> isEnglish()
@@ -118,9 +127,10 @@ Template.issue.events
 
   # Modal controls
   # Needs global body state functionality..
-  # "click .js-launch-modal": -> Session.set(MODAL_SHOWING, true)
-  # "click button.close": -> Session.set(MODAL_SHOWING, false)
-  # "click .modal-backdrop": -> Session.set(MODAL_SHOWING, false)
+  "click .nav a": (event, template) ->
+    event.preventDefault()
+    target = $(event.target).data("target")
+    Session.set CURRENT_ISSUE_TAB, target
 
   "change .issue-form input": (event, template) ->
     input = $(event.target)
@@ -154,6 +164,7 @@ Template.issue.events
     name = $(event.target).attr("name")
     key = Template.extractKey name
     value = event.target.checked
+
     Session.set key, value
 
     Meteor.call 'saveIssueProperty', _id, key, value, (error, result) -> alert error if error
@@ -209,6 +220,7 @@ Template.issue.events
 
     data = $(event.target).serializeJSON(useIntKeysAsArrayIndex: true).issue or {}
 
+
     # Slugs
     data.slugEN = _.slugify data.titleEN
     data.slugFR = _.slugify data.titleFR
@@ -217,6 +229,24 @@ Template.issue.events
     data.issuanceDate = moment(data.issuanceDate, DATE_INPUT_FORMAT).toDate()
     data.maturityDate = moment(data.maturityDate, DATE_INPUT_FORMAT).toDate()
     _.each data.prices, (p) -> p.date = moment(p.date, DATE_INPUT_FORMAT).toDate()
+
+    # Validate components
+    Template.issue.validators.portfolios(data.portfolios) if data.portfolios
+    Template.issue.validators.bids(data.bids) if data.bids
+    Template.issue.validators.etcs(data.etcs) if data.etcs
+    Template.issue.validators.distributions(data.distributions) if data.distributions
+    Template.issue.validators.calls(data.calls) if data.calls
+    Template.issue.validators.fixings(data.fixings) if data.fixings
+
+    # Copy in new data.
+    _.extend @, data
+
+    # Update Session array variables
+    _.each @portfolios, (portfolio, pIndex) ->
+      _.each PortfoliosSchema, (v, k) -> Template.convertToSession(v, k, portfolio, "portfolios.#{pIndex}")
+
+    _.each IssuesSchema, (v, k) => Template.convertToSession(v, k, @)
+    # _.each PortfoliosSchema, (v, k) => Template.convertToSession(v, k, @, "portfolios.#{@index}")
 
     Meteor.call 'saveIssue', @_id, data, Template.handleSave
 
@@ -240,107 +270,14 @@ Template.issue.events
 # Attach our schema
 Meteor.startup ->
 
-  helpers = {}
-  _.each IssuesSchema, (v, k) => Template.getHelpers(v, k, helpers)
-  Template.issue.helpers helpers
+  helpersReference = {}
+  _.each IssuesSchema, (v, k) => Template.assignHelpers(helpersReference, v, k)
+  Template.issue.helpers helpersReference
 
-  portfolioHelpers = {}
-  _.each PortfoliosSchema, (v, k) => Template.getHelpers(v, k, portfolioHelpers, "portfolios.$0")
-  Template.portfolio.helpers portfolioHelpers
+  portfolioHelpersReference = {}
+  _.each PortfoliosSchema, (v, k) => Template.assignHelpers(portfolioHelpersReference, v, k, "portfolios.$0")
+  Template.portfolio.helpers portfolioHelpersReference
 
-  tickerHelpers = {}
-  _.each TickersSchema, (v, k) => Template.getHelpers(v, k, tickerHelpers, "portfolios.$1.tickers.$0")
-  Template.ticker.helpers tickerHelpers
-
-Template.issue.chartjsGraph = ->
-
-  # Chart config (move to own file)
-  overriddenChartGlobals =
-    animation: true
-    animationSteps: 60
-    animationEasing: 'easeOutQuart'
-    showScale: true
-    responsive: true
-    showTooltips: false
-
-  Chart.defaults.global = _.defaults overriddenChartGlobals, Chart.defaults.global
-
-  if bids and not _.isEmpty bids
-
-    # My consts.
-    DAYS_OF_MONTH = 31
-    MAX_CHART_POINTS = 20
-
-    # Turn chartData into an array of arrays (for later),
-    # and chain it to prepare for future steps.
-    chartData = _.chain(bids)
-
-    # Reduce the amount of data points so that it fits on a graph.
-    if chartData.length > MAX_CHART_POINTS
-
-      # Moduluses (moduli?) for filter
-      dateModulus = null
-      excessModulus = null
-
-      # group by month
-      month = (b, i, context) -> b.date.substr(0,7)
-
-      # Date filter to take regular days of the month.
-      byDate = (grouping, iteraree, context) ->
-        filtered = []
-        _.each grouping, (g) ->
-          filtered.push _.filter(g, (b, i) -> i % excessModulus is 0)
-        filtered
-
-
-        # Find the date filter to take.
-  #       day = Number b.date.substr(8,2)
-  #       _.contains(dayIntervals, day) or i is context.length
-
-      # Double check (eg, if we have 2 years of data, monthly data will be too much.)
-      ifExcess = (b, i, context) ->
-        # Bail early if we're not taking monthly data.
-        return true if context.length > MAX_CHART_POINTS
-
-        # Calculate excessModulus based on the input we get.
-        excessModulus = excessModulus or Math.ceil(context.length / MAX_CHART_POINTS)
-        i % excessModulus is 0
-
-      # Calculate dateModulus and other filter variables.
-      dateModulus = Math.ceil(bids.length / MAX_CHART_POINTS)
-
-      # Find out which dates we will be taking.
-  #     dayIntervals = if data.bids.length <= MAX_CHART_POINTS then [1]
-  #     else _.filter _.range(DAYS_OF_MONTH), (b) -> b % dateModulus is 0
-
-      # Filter the data.
-      chartData = chartData.groupBy(month).filter(byDate).flatten(true).filter(ifExcess)
-
-    chartData = chartData.map(_.values).unzip().value()
-    labels = chartData[0]
-    bids = chartData[1]
-
-    # Always add the last bid.
-    if _.last(labels) isnt _.last(bids).date
-      bids.push _.last(bids).amount
-      labels.push _.last(bids).date
-
-    data =
-      labels: labels,
-      datasets: [
-        label: "My First dataset"
-        fillColor: "rgba(151,187,205,0.2)"
-        strokeColor: "rgba(151,187,205,1)"
-        pointColor: "rgba(151,187,205,1)"
-        pointStrokeColor: "#fff"
-        pointHighlightFill: "#fff"
-        pointHighlightStroke: "rgba(151,187,205,1)"
-        data: bids
-      ]
-
-    options =
-      scaleBeginAtZero: true
-      pointDot: false
-
-    ctx = document.getElementById("chart").getContext("2d")
-    graph = new Chart(ctx).Line data, options
+  tickerHelpersReference = {}
+  _.each TickersSchema, (v, k) => Template.assignHelpers(tickerHelpersReference, v, k, "portfolios.$1.tickers.$0")
+  Template.ticker.helpers tickerHelpersReference

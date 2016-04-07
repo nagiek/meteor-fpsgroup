@@ -127,7 +127,7 @@ Template.appBody.helpers
     Session.get(MENU_KEY) and "menu-open"
 
   overlayOpen: ->
-    (if Overlay.isOpen() then "overlay-open" else "")
+    (if Overlay.isOpen() then "modal-open" else "")
 
   connected: ->
     if Session.get(SHOW_CONNECTION_ISSUE_KEY)
@@ -149,6 +149,13 @@ Template.appBody.events
     event.stopImmediatePropagation()
     event.preventDefault()
     Session.set MENU_KEY, not Session.get(MENU_KEY)
+    return
+
+  "click .js-launch-modal": (event) ->
+    event.stopImmediatePropagation()
+    event.preventDefault()
+    data = $(event.currentTarget).data()
+    Overlay.open data.template, data.data
     return
 
   "click #primary-nav a": (event) ->

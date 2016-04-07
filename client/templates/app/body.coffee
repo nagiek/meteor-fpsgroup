@@ -1,5 +1,5 @@
 @DATE_INPUT_FORMAT = i18n("common.dates.formats.output")
-  
+
 # replaceFileInput
 #
 # Credit to blueimp File Upload
@@ -9,10 +9,10 @@ Template.replaceFileInput = (input) ->
   $("<form></form>").append(inputClone)[0].reset()
   input.replaceWith(inputClone)
 
-  
+
 # "name" is in the form "issue[key]", in order to maintain form compatibility
 # To get what we want, we strip the key from the name.
-Template.extractKey = (name) -> 
+Template.extractKey = (name) ->
   key = name.substring(name.indexOf("[") + 1, name.length - 1)
   # Replace additional object nesting with our dot notation.
   key.replace(/\]\[/g, ".")
@@ -21,11 +21,11 @@ Template.handleSave = (error, _id) ->
   unless error
     # TODO: Update the base data
     # originalData = _id
-    notification = 
+    notification =
       title: i18n "common.messages.saved"
       type: "success"
   else
-    notification = 
+    notification =
       title: i18n "common.errors.notSaved"
       type: "error"
   Template.appBody.addNotification notification
@@ -35,7 +35,7 @@ Template.convertToSession = (v, k, data, prefix) ->
   # namespacing prefixes
   prefix = if prefix then prefix + "." else ""
 
-  switch v 
+  switch v
     when Array
       unless _.isArray data[k] then data[k] = []
       Session.set prefix+k, data[k]
@@ -48,18 +48,18 @@ Template.convertToSession = (v, k, data, prefix) ->
       unless _.isObject data[k] then data[k] = {}
       _.each v, (objectValue, objectKey) -> Template.convertToSession(objectValue, objectKey, data[k], prefix + k)
 
-Template.getHelpers = (v, k, helpers, prefixTemplate) ->
+Template.assignHelpers = (helpers, v, k, prefixTemplate) ->
 
   prefixTemplate = if prefixTemplate then prefixTemplate + "." else ""
 
   # namespacing prefixes
-  switch v 
+  switch v
     # Array helpers managed manually.
     when Array then return
     when String, Boolean, Number
       helpers[k] = ->
         if prefixTemplate and not @prefix
-          @prefix = _.clone prefixTemplate 
+          @prefix = _.clone prefixTemplate
           _.each prefixTemplate.match(/\$[0-9]/g), (match) =>
             indexLevel = Number @prefix.substr(@prefix.indexOf(match)+1,1)
             index = if indexLevel is 0 then @index else Template.parentData(indexLevel).index
@@ -73,7 +73,7 @@ Template.getHelpers = (v, k, helpers, prefixTemplate) ->
     when Date
       helpers[k] = ->
         if prefixTemplate and not @prefix
-          @prefix = _.clone prefixTemplate 
+          @prefix = _.clone prefixTemplate
           _.each prefixTemplate.match(/\$[0-9]/g), (match) =>
             indexLevel = Number @prefix.substr(@prefix.indexOf(match)+1,1)
             index = if indexLevel is 0 then @index else Template.parentData(indexLevel).index
@@ -87,7 +87,7 @@ Template.getHelpers = (v, k, helpers, prefixTemplate) ->
 
       helpers[k+"Input"] = ->
         if prefixTemplate and not @prefix
-          @prefix = _.clone prefixTemplate 
+          @prefix = _.clone prefixTemplate
           _.each prefixTemplate.match(/\$[0-9]/g), (match) =>
             indexLevel = Number @prefix.substr(@prefix.indexOf(match)+1,1)
             index = if indexLevel is 0 then @index else Template.parentData(indexLevel).index
@@ -100,7 +100,7 @@ Template.getHelpers = (v, k, helpers, prefixTemplate) ->
         if ret then moment(ret).format(DATE_INPUT_FORMAT) else ""
     else
       # It's an Object, go one level deeper.
-      _.each v, (objectValue, objectKey) -> Template.getHelpers(objectValue, k + "." + objectKey, helpers, prefixTemplate)
+      _.each v, (objectValue, objectKey) -> Template.assignHelpers(helpers, objectValue, k + "." + objectKey, prefixTemplate)
 
 Meteor.startup ->
   # Add missing underscore functions
@@ -226,11 +226,11 @@ Meteor.startup ->
 
   # A (possibly faster) way to get the current timestamp as an integer.
   _.now = Date.now or -> (new Date).getTime()
-      
+
   # Returns everything but the first entry of the array.
   # Aliased as tail and drop. Especially useful on the arguments object.
   # Passing an n will return the rest N values in the array.
-  underscore.rest = underscore.tail = underscore.drop = 
+  underscore.rest = underscore.tail = underscore.drop =
   _.rest = _.tail = _.drop = (array, n, guard) ->
     slice.call array, if n == null or guard then 1 else n
 

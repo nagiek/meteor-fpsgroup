@@ -45,28 +45,28 @@ Router.configure
   waitOn: -> [issuesSubscription]
   onBeforeAction: ->
     @issuesSubscription = issuesSubscription
-  # action: ->
-  #   if @ready()
-  #     @render()
-  #   else
-  #     @render "loading"
+  action: ->
+    if @ready()
+      @render()
+    else
+      @render "loading"
 
 @StructuresController = RouteController.extend
   waitOn: -> [structureFilesSubscription]
-  # action: ->
-  #   if @ready()
-  #     @render()
-  #   else
-  #     @render "loading"
+  action: ->
+    if @ready()
+      @render()
+    else
+      @render "loading"
 
 @IssueController = RouteController.extend
   waitOn: -> [Meteor.subscribe("issue",  @params._id), publicFilesSubscription, privateFilesSubscription, structureFilesSubscription]
   data: -> Issues.findOne @params._id
-  # action: ->
-  #   if @ready()
-  #     @render()
-  #   else
-  #     @render "loading"
+  action: ->
+    if @ready()
+      @render()
+    else
+      @render "loading"
 
 @BookmarksController = RouteController.extend
   onBeforeAction: ->
@@ -85,12 +85,12 @@ Router.configure
   data: ->
     RecipesData[@params.name]
 
-# @AdminController = RouteController.extend
-#   action: ->
-#     if @ready()
-#       @render()
-#     else
-#       @render "loading"
+@AdminController = RouteController.extend
+  action: ->
+    if @ready()
+      @render()
+    else
+      @render "loading"
 
 
 Router.map ->

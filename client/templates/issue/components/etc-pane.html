@@ -1,0 +1,87 @@
+<template name="etcPane">
+  {{#if isAdmin}}
+  <div class="well show-on-edit">
+    <div class="clearfix">
+      <div class="pull-left">
+        <div class="form-group inline-block etc-total-period-group">
+          <label>{{__ "issue.etc.totalPeriod" }}</label>
+          <input type="number" class="form-control js-session etc-total-period" name="issue[etc][totalPeriod]" min="0" />
+        </div>
+        <div class="form-group inline-block etc-steps-group">
+          <label>{{__ "issue.etc.steps" }}</label>
+          <input type="number" class="form-control js-session etc-steps" name="issue[etc][steps]" min="0" />
+        </div>
+
+        <div class="form-group inline-block etc-max-amount-group">
+          <label>{{__ "issue.etc.maxAmount" }}</label>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input type="number" class="form-control js-session etc-max-amount" name="issue[etc][maxAmount]" min="0" step="0.01" />
+          </div>
+        </div>
+      </div>
+      <div class="pull-right">
+        <div class="form-group inline-block">
+          <button type="button" class="btn btn-primary js-create-etcs">{{__ "issue.actions.createETCs"}}</button>
+          <button type="button" class="btn btn-default js-reset-etcs">{{__ "issue.actions.resetETCs"}}</button>
+          <button type="button" class="btn btn-default js-set-last-etc-to-mat-date">{{__ "issue.actions.setLastETCtoMat" }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+  <div class="table-responsive">
+  <table class="table table-condensed etcs form-inline">
+    <thead>
+      <tr>
+        <th>{{__ "common.prepositions.from" }} {{__ "common.nouns.date" }}</th>
+        <th>{{__ "common.prepositions.to" }} {{__ "common.nouns.date" }}</th>
+        <th>{{__ "common.nouns.amount"}}</th>
+        <th>{{! operations }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each ETCs}}
+        {{> ETC}}
+      {{else}}
+        <tr>
+          <td colspan="100%">
+            {{__ "issue.empty.ETCs"}}
+            {{#if isAdmin}}
+              <button type="button" class="btn btn-mini btn-success show-on-edit js-add-etc">
+                <span class="glyphicon glyphicon-plus" title="{{__ "common.actions.add" }}"></span>
+              </button>
+            {{/if}}
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  </div>
+  <!-- 
+  <form class="modal-form etc-form {{editing}}">
+    <div class="modal-dialog {{editingModal}}">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="{{__ "common.actions.close"}}"><span aria-hidden="true">&times;</span></button>
+          <h3 id="etc-label" class="modal-title">{{__ "issue.nouns.etcSchedule" }}
+          {{#if isAdmin}}
+          <button type="button" class="btn btn-default js-edit-issue {{editingActive}}{{#unless _id}} disabled{{/unless}}">
+            <span class="glyphicon glyphicon-edit"></span>
+            {{__ "common.actions.edit" }}
+          </button>
+          {{/if}}
+          </h3>
+
+        </div>
+        <div class="modal-body">
+
+        </div>
+        <div class="modal-footer show-on-edit">
+          <button type="submit" class="btn btn-primary js-save-issue ">{{__ "common.actions.save" }}</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  -->
+</template>

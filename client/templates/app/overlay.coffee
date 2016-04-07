@@ -29,29 +29,22 @@ Template.overlay.rendered = ->
       $node.hide().insertBefore(next).velocity "fadeIn",
         duration: ANIMATION_DURATION
 
-      return
-
     removeElement: (node, done) ->
       $node = $(node)
       $node.velocity "fadeOut",
         duration: ANIMATION_DURATION
-        complete: ->
-          $node.remove()
-          return
-
-      return
-
-  return
+        complete: -> $node.remove()
 
 Template.overlay.helpers
-  template: ->
-    Overlay.template()
+  template: -> Overlay.template()
+  data: -> Overlay.data()
+  isOpen: -> Overlay.isOpen()
 
-  data: ->
-    Overlay.data()
+Template.overlay.events
+  "click .js-close-overlay, click .close, click .modal": (event) ->
+    event.preventDefault()
+    Overlay.close()
 
-Template.overlay.events "click .js-close-overlay": (event) ->
-  event.preventDefault()
-  Overlay.close()
-  return
-
+  "click .modal-dialog": (event) ->
+    # Make sure that the event does not hit the 'click .modal' level.
+    event.stopPropagation()

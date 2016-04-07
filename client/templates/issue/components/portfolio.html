@@ -185,23 +185,24 @@
       </tbody>
       {{#if hasFooter}}
         <tfoot>
+          {{#if hasMoreThanOneAsset}}
           <tr>
             <td colspan={{Col1}}><p class="form-control-static">{{__ "issue.nouns.return"}}</p></td>
             <td colspan={{Col2a}}><p class="form-control-static">{{displayPortfolioReturn}}</p></td>
             {{#if hasLocalReturnModifier}}<td colspan={{Col2b}}><p class="form-control-static">{{displayModifiedPortfolioReturn}}</p></td>{{/if}}
             {{#if isAdmin}}<td class="show-on-edit" colspan="2"></td>{{/if}}
           </tr>
-
-          {{#if hasParticipationFactor}}
+          {{/if}}
+          {{#if hasParticipationFactor}}{{#if portfolioReturnIsPositive}}
             <tr>
-              <td colspan="{{Col1}}">{{__ "issue.nouns.multipliedReturn"}}</td>
-              <td colspan="{{Col2}}">{{displayMultipliedReturn}}</td>
+              <td colspan="{{Col1}}">{{__ "issue.nouns.multipliedPortfolioReturn"}}</td>
+              <td colspan="{{Col2}}">{{displayMultipliedPortfolioReturn}}</td>
               {{#if isAdmin}}<td class="show-on-edit" colspan="2"></td>{{/if}}
             </tr>
-          {{/if}}
+          {{/if}}{{/if}}
           {{#if hasMaximum}}
             <tr>
-              <td colspan="{{Col1}}">{{__ "issue.nouns.maximum"}}</td>
+              <td colspan="{{Col1}}">{{__ "issue.fields.maximum"}}</td>
               <td colspan="{{Col2}}">{{displayMaximum}}</td>
               {{#if isAdmin}}<td class="show-on-edit" colspan="2"></td>{{/if}}
             </tr>
@@ -209,7 +210,7 @@
 
           {{#if hasBarrier}}
             <tr>
-              <td colspan="{{Col1}}">{{__ "issue.nouns.barrier"}}</td>
+              <td colspan="{{Col1}}">{{__ "issue.fields.barrierAmount"}}</td>
               <td colspan="{{Col2}}">{{displayBarrierAmount}}</td>
               {{#if isAdmin}}<td class="show-on-edit" colspan="2"></td>{{/if}}
             </tr>

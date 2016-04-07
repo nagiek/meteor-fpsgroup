@@ -1,0 +1,53 @@
+<template name="bidsPane">
+  <div class="table-responsive">
+  <table class="table table-condensed bids form-inline">
+    <thead>
+      <tr>
+        <th>{{__ "common.nouns.date"}}</th>
+        <th>{{__ "common.nouns.amount"}}</th>
+        <th>{{! operations }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each bids}}
+        {{> bid}}
+      {{else}}
+        <tr>
+          <td colspan="100%">
+            {{__ "issue.empty.bids"}}
+            {{#if isAdmin}}
+              <button type="button" class="btn btn-mini btn-success show-on-edit js-add-bid">
+                <span class="glyphicon glyphicon-plus" title="{{__ "common.actions.add" }}"></span>
+              </button>
+            {{/if}}
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  </div>
+  <!-- <form class="modal-form bids-form {{editing}}">
+    <div class="modal-dialog {{editingModal}}">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="{{__ "common.actions.close"}}"><span aria-hidden="true">&times;</span></button>
+          <h3 id="bids-label" class="modal-title">{{__ "issue.nouns.bids" }}
+          {{#if isAdmin}}
+          <button type="button" class="btn btn-default js-edit-issue {{editingActive}}{{#unless _id}} disabled{{/unless}}">
+            <span class="glyphicon glyphicon-edit"></span>
+            {{__ "common.actions.edit" }}
+          </button>
+          {{/if}}
+          </h3>
+
+        </div>
+        <div class="modal-body">
+
+        </div>
+        <div class="modal-footer show-on-edit">
+          <button type="submit" class="js-save-issue btn btn-primary">{{__ "common.actions.save" }}</button>
+        </div>
+      </div>
+    </div>
+  </form> -->
+</template>

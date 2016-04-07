@@ -1,6 +1,6 @@
 <template name="callDate">
   <tr>
-    {{#if ../hasCallValDate}}
+    {{#if hasCallValDate}}
     <td>
       <div class="show-on-view">{{valuationDate}}</div>
       <div class="form-group show-on-edit">
@@ -16,7 +16,7 @@
         <input type="date" name="issue[calls][][paymentDate]" class="form-control datepicker pay-date-input" maxlength="10" data-date-format="{{__ "common.dates.formats.input" }}" value="{{paymentDateInput}}" />
       </div>
     </td>
-    {{#if ../hasCallThreshold}}
+    {{#if hasCallThreshold}}
       <td>
         <div class="show-on-view">{{displayThreshold}}</div>
         <div class="form-group show-on-edit">
